@@ -1,6 +1,7 @@
 import "../global.css"
 import { Text, View } from "react-native";
  
+//Testing config
 export default function Modal() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
