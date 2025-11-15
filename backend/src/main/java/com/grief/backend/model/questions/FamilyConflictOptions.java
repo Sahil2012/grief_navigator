@@ -1,4 +1,6 @@
-package com.grief.backend.model;
+package com.grief.backend.model.questions;
+
+import com.grief.backend.model.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

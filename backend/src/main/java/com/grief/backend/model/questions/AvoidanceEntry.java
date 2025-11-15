@@ -1,9 +1,12 @@
-package com.grief.backend.model;
+package com.grief.backend.model.questions;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.grief.backend.model.AppUser;
+import com.grief.backend.model.BaseEntity;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

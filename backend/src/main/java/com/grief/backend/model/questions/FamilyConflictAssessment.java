@@ -1,8 +1,11 @@
-package com.grief.backend.model;
+package com.grief.backend.model.questions;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.grief.backend.model.AppUser;
+import com.grief.backend.model.BaseEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

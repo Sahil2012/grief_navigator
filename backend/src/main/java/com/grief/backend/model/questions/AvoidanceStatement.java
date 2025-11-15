@@ -1,4 +1,6 @@
-package com.grief.backend.model;
+package com.grief.backend.model.questions;
+
+import com.grief.backend.model.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,10 +11,10 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "belief_statements")
-public class BeliefStatement extends BaseEntity {
+@Table(name = "avoidance_statements")
+public class AvoidanceStatement extends BaseEntity {
     @Column(length = 1000)
     private String text;
-
-    private String category; // e.g., GUILT, UNFAIRNESS, SAFETY
+    private String category;
 }
+
