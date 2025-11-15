@@ -55,10 +55,10 @@ public class FamilyConflictAnswer extends BaseEntity {
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_at_answer", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime createdAt_answer = OffsetDateTime.now();
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "updated_at_answer", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime updatedAt_answer = OffsetDateTime.now();
 
 }
