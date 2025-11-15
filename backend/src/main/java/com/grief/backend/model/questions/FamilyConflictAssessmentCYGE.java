@@ -22,9 +22,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "family_conflict_assessments",
+@Table(name = "family_conflict_assessments_cyge",
        indexes = { @Index(columnList = "app_user_id") })
-public class FamilyConflictAssessment extends BaseEntity {
+public class FamilyConflictAssessmentCYGE extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "app_user_id", nullable = false)

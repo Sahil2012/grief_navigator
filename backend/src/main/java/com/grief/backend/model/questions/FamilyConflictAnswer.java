@@ -24,7 +24,7 @@ public class FamilyConflictAnswer extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "assessment_id", nullable = false)
-    private FamilyConflictAssessment assessment;
+    private FamilyConflictAssessmentCYGE assessment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")

@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.grief.backend.model.AppUser;
 import com.grief.backend.model.BaseEntity;
-import com.grief.backend.model.questions.FamilyConflictAssessment;
+import com.grief.backend.model.questions.FamilyConflictAssessmentCYGE;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -42,7 +42,7 @@ public class NegotiationPreparation extends BaseEntity {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "family_conflict_assessment_id")
-    private FamilyConflictAssessment familyConflictAssessment;
+    private FamilyConflictAssessmentCYGE familyConflictAssessment;
 
     @Column(name = "topic", length = 500)
     private String topic; // e.g., "Parenting time with Emma"
