@@ -17,20 +17,16 @@ import lombok.Setter;
 @Setter
 @Table(name = "family_conflict_answers",
        indexes = {
-         @Index(columnList = "assessment_id"),
-         @Index(columnList = "field_id")
-       })
+         @Index(columnList = "assessment_id")       })
 public class FamilyConflictAnswer extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "assessment_id", nullable = false)
     private FamilyConflictAssessment assessment;
 
-    @Column(name = "field_id", nullable = false, length = 200)
-    private String fieldId;         // e.g. "other_person_relationship", "police_called_criminal_charges"
-
-    @Column(name = "section_id", length = 200)
-    private String sectionId;       // e.g. "situation_assessment_part1"
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "question_id")
+    private FamilyConflictQuestions question;
 
     @Column(name = "control_type", nullable = false, length = 50)
     private String controlType;     // text | radio | checkbox | textarea
