@@ -31,7 +31,7 @@ public class FamilyConflictAnswer extends BaseEntity {
     private FamilyConflictQuestions question;
 
     @Column(name = "control_type", nullable = false, length = 50)
-    private String controlType;     // text | radio | checkbox | textarea
+    private String controlType;     // radio | checkbox | textarea
 
     @Column(name = "value_text", columnDefinition = "TEXT")
     private String valueText;       // free-text / long text
