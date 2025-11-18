@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: Grief Navigator API
+  version: 1.0.0
+
+servers:
+  - url: /api
+
+paths:
+
+  /losses/register:
+    post:
+      summary: Register losses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LossRegisterRequest'
+      responses:
+        '200':
+          description: Loss registered successfully
+
+components:
+  schemas:
+    LossRegisterRequest:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: Type of loss (e.g., "death", "divorce", "job_loss")
+          description:
+            type: string
+            description: Description of the loss
+          difficulty_level:
+            type: integer
+            description: Difficulty level of the loss on a scale from 1 to 10
+          date_of_loss:
+            type: string
+            format: date
+            description: Date when the loss occurred
+        required:
+          - type
+          - description
+          - difficulty_level
+          - date_of_loss
