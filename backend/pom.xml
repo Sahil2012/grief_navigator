@@ -104,7 +104,6 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>${openapi.generator.version}</version>
-
                 <executions>
                     <execution>
                         <id>generate-controller</id>
@@ -112,15 +111,12 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
-
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
-                            <templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>
-
                             <apiPackage>com.grief.backend.generated.api</apiPackage>
                             <modelPackage>com.grief.backend.generated.model.dto</modelPackage>
-                            
+
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateApiDocumentation>false</generateApiDocumentation>
@@ -128,18 +124,16 @@
                             <generateModelTests>false</generateModelTests>
                             <configOptions>
                                 <useJakartaEe>true</useJakartaEe>
-
-                                <interfaceOnly>false</interfaceOnly>
-                                <generateInterfaces>false</generateInterfaces>
-                                <generateControllerAsAbstract>true</generateControllerAsAbstract>
-                                <generateOperationsToReturnNotImplemented>false</generateOperationsToReturnNotImplemented>
-                                
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
                                 <dateLibrary>java8-local</dateLibrary>
+                                <useSpringBoot3>true</useSpringBoot3>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
 
 
             <plugin>
