@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.1
 info:
   title: Grief Navigator API
   version: 1.0.0
@@ -7,42 +7,73 @@ servers:
   - url: /api
 
 paths:
-
-  /losses/register:
+  /loss/register:
     post:
+      operationId: registerLosses
       summary: Register losses
+      tags:
+        - Loss
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LossRegisterRequest'
+              type : array
+              items:
+                $ref: '#/components/schemas/LossDTO'
       responses:
         '200':
           description: Loss registered successfully
+        '400':
+          description: Bad request
+
+  /loss:
+    get:
+      operationId: getAllLosses
+      summary: Get all losses for a perticular user
+      tags:
+        - Loss
+      responses:
+        '200':
+          description: A list of losses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LossDTO'
+        '500':
+          description: Internal server error
+
+  /appUser/me:
+    get:
+      operationId: getMyAppUser
+      summary: Register a new app user
+      tags:
+        - AppUser        
+      responses:
+        '200':
+          description: App user registered successfully
+        '400':
+          description: Bad request
 
 components:
   schemas:
-    LossRegisterRequest:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            description: Type of loss (e.g., "death", "divorce", "job_loss")
-          description:
-            type: string
-            description: Description of the loss
-          difficulty_level:
-            type: integer
-            description: Difficulty level of the loss on a scale from 1 to 10
-          date_of_loss:
-            type: string
-            format: date
-            description: Date when the loss occurred
-        required:
-          - type
-          - description
-          - difficulty_level
-          - date_of_loss
+    LossDTO:
+      type: object
+      properties:
+        type:
+          type: string
+        description:
+          type: string
+        difficulty:
+          type: integer
+          minimum: 0
+          maximum: 4
+        timeOfDay:
+          type: string
+      required:
+        - type
+        - description
+        - difficulty
+        - timeOfDay
