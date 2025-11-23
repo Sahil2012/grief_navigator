@@ -32,4 +32,8 @@ public class UserService {
                     return appUserRepository.save(newUser);
                 });
     }
+
+    public AppUser getAppUser(String authid) {
+        return appUserRepository.findByAuthProviderId(authid).get();
+    }
 }

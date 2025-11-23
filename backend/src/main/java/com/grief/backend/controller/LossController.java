@@ -3,16 +3,16 @@ package com.grief.backend.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grief.backend.dto.AuthUser;
 import com.grief.backend.generated.api.LossApi;
 import com.grief.backend.generated.model.dto.LossDTO;
 import com.grief.backend.service.LossService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class LossController implements LossApi {
 
@@ -24,15 +24,18 @@ public class LossController implements LossApi {
 
     @Override
     public ResponseEntity<List<LossDTO>> getAllLosses() {
-        AuthUser AuthUser = (AuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return ResponseEntity.ok().body(lossService.getAllLosses(AuthUser.getSubject()));
+        return ResponseEntity.ok().body(lossService.getAllLosses());
     }
 
     @Override
     public ResponseEntity<Void> registerLosses(@Valid List<@Valid LossDTO> lossDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registerLosses'");
+        try {
+            lossService.saveLoss(lossDTO);
+            return ResponseEntity.ok().build();
+        } catch(Exception e) {
+            log.error("Error saving the dtos", e);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     

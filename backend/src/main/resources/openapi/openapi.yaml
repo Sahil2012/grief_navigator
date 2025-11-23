@@ -63,11 +63,11 @@ components:
       type: object
       properties:
         type:
-          type: string
+          $ref: "#/components/schemas/LossType"
         description:
           type: string
         difficulty:
-          type: string
+          $ref: "#/components/schemas/DifficultyLevel"
         time:
           type: string
       required:
@@ -75,3 +75,17 @@ components:
         - description
         - difficulty
         - time
+    LossType:
+      type: string
+      enum:
+        - RELATIONSHIP
+        - THING
+        - IDENTITY
+    DifficultyLevel:
+      type: string
+      enum:
+        - ZERO
+        - ONE
+        - TWO
+        - THREE
+        - FOUR

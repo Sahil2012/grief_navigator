@@ -1,10 +1,12 @@
 package com.grief.backend.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.grief.backend.generated.model.dto.LossDTO;
+import com.grief.backend.model.AppUser;
 import com.grief.backend.model.questions.Loss;
 import com.grief.backend.repository.LossRepository;
 
@@ -12,20 +14,45 @@ import com.grief.backend.repository.LossRepository;
 public class LossService {
 
     private LossRepository lossRepository;
+    private UserService userService;
+    private CurrentUser currentUser;
 
-    public LossService(LossRepository lossRepository) {
+    public LossService(LossRepository lossRepository, CurrentUser currentUser, UserService userService) {
         this.lossRepository = lossRepository;
+        this.currentUser = currentUser;
+        this.userService = userService;
     }
 
-    public List<LossDTO> getAllLosses(String subject) {
+    public List<LossDTO> getAllLosses() {
 
-        List<Loss> losses = lossRepository.findAllLosses(subject);
+        List<Loss> losses = lossRepository.findAllLosses(currentUser.getCurrentUserAuthId());
 
         return losses
                 .stream()
                 .map(loss -> {
-                    return new LossDTO(loss.getType().toString(), loss.getDescription(), loss.getDescription(),
+                    return new LossDTO(loss.getType(), loss.getDescription(), loss.getDifficulty(),
                             loss.getTime());
                 }).toList();
+
+    }
+
+    public void saveLoss(List<LossDTO> losses) throws Exception {
+
+        AppUser appUser = userService.getAppUser(currentUser.getCurrentUserAuthId());
+
+        lossRepository
+                .saveAll(
+                        losses
+                                .stream()
+                                .map(dto -> {
+                                    return Loss.builder()
+                                            .appUser(appUser)
+                                            .type(dto.getType())
+                                            .description(dto.getDescription())
+                                            .difficulty(dto.getDifficulty())
+                                            .time(dto.getTime())
+                                            .build();
+                                }).collect(Collectors.toList()));
+
     }
 }

@@ -3,10 +3,10 @@ package com.grief.backend.model.questions;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.grief.backend.generated.model.dto.DifficultyLevel;
+import com.grief.backend.generated.model.dto.LossType;
 import com.grief.backend.model.AppUser;
 import com.grief.backend.model.BaseEntity;
-import com.grief.backend.model.enums.DifficultyLevel;
-import com.grief.backend.model.enums.LossType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,13 +18,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "losses")
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Loss extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,7 +43,7 @@ public class Loss extends BaseEntity {
     private String description;
 
     // free-text as per spec (e.g., "3 months")
-    private String timeAgo;
+    private String time;
 
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficulty;
