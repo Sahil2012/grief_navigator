@@ -67,13 +67,11 @@ components:
         description:
           type: string
         difficulty:
-          type: integer
-          minimum: 0
-          maximum: 4
-        timeOfDay:
+          type: string
+        time:
           type: string
       required:
         - type
         - description
         - difficulty
-        - timeOfDay
+        - time
