@@ -18,13 +18,13 @@ paths:
         content:
           application/json:
             schema:
-              type : array
+              type: array
               items:
-                $ref: '#/components/schemas/LossDTO'
+                $ref: "#/components/schemas/LossDTO"
       responses:
-        '200':
+        "200":
           description: Loss registered successfully
-        '400':
+        "400":
           description: Bad request
 
   /loss:
@@ -34,31 +34,60 @@ paths:
       tags:
         - Loss
       responses:
-        '200':
+        "200":
           description: A list of losses
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LossDTO'
-        '500':
+                  $ref: "#/components/schemas/LossDTO"
+        "500":
           description: Internal server error
 
-  /appUser/me:
+  /auth/me:
     get:
       operationId: getMyAppUser
       summary: Register a new app user
       tags:
-        - AppUser        
+        - AppUser
       responses:
-        '200':
+        "200":
           description: App user registered successfully
-        '400':
+        "400":
+          description: Bad request
+
+  /difficultTimes:
+    post:
+      operationId: registerDifficultTimes
+      summary: Save difficult difficultTimes
+      tags:
+        - DifficultTimes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/DifficultTimes"
+      responses:
+        "200":
+          description: Difficulties acknowleged
+        "400":
           description: Bad request
 
 components:
   schemas:
+    DifficultTimes:
+      type: object
+      properties:
+        dayOrTime:
+          type: string
+        difficulty:
+          $ref: "#/components/schemas/DifficultyLevel"
+        related_loss:
+          type: long
     LossDTO:
       type: object
       properties:

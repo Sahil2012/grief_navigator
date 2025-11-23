@@ -1,8 +1,8 @@
 package com.grief.backend.model.questions;
 
+import com.grief.backend.generated.model.dto.DifficultyLevel;
 import com.grief.backend.model.AppUser;
 import com.grief.backend.model.BaseEntity;
-import com.grief.backend.model.enums.DifficultyLevel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,12 +12,18 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "difficult_times")
 public class DifficultTime extends BaseEntity {
 
