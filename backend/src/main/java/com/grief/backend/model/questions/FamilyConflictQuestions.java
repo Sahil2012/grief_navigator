@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "family_conflict_questions", indexes = {@Index(columnList = "titles")})
+@Table(name = "family_conflict_questions", indexes = {@Index(columnList = "title")})
 public class FamilyConflictQuestions extends BaseEntity {
     
     @Column(name = "field_id", nullable = false, length = 200)

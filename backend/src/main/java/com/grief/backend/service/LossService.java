@@ -14,13 +14,11 @@ import com.grief.backend.repository.LossRepository;
 public class LossService {
 
     private LossRepository lossRepository;
-    private UserService userService;
     private CurrentUser currentUser;
 
-    public LossService(LossRepository lossRepository, CurrentUser currentUser, UserService userService) {
+    public LossService(LossRepository lossRepository, CurrentUser currentUser) {
         this.lossRepository = lossRepository;
         this.currentUser = currentUser;
-        this.userService = userService;
     }
 
     public List<LossDTO> getAllLosses() {
@@ -38,7 +36,7 @@ public class LossService {
 
     public void saveLoss(List<LossDTO> losses) throws Exception {
 
-        AppUser appUser = userService.getAppUser(currentUser.getCurrentUserAuthId());
+        AppUser appUser = currentUser.getCurrentAppUser();
 
         lossRepository
                 .saveAll(
@@ -54,5 +52,9 @@ public class LossService {
                                             .build();
                                 }).collect(Collectors.toList()));
 
+    }
+
+    public Loss getLoss(Long lossId) {
+        return lossRepository.findById(lossId).get();
     }
 }

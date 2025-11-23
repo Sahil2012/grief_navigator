@@ -33,7 +33,7 @@ public class UserService {
                 });
     }
 
-    public AppUser getAppUser(String authid) {
-        return appUserRepository.findByAuthProviderId(authid).get();
+    public AppUser getAppUser(String authId) {
+        return appUserRepository.findByAuthProviderId(authId).get();
     }
 }
