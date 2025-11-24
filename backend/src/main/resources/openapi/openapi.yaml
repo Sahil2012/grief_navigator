@@ -76,6 +76,24 @@ paths:
           description: Difficulties acknowleged
         "400":
           description: Bad request
+  
+  /beliefStatement:
+    get:
+      operationId: getBeliefStatements
+      summary: Fetch pre defined beliefStatement
+      tags:
+        - BeliefStatement
+      responses:
+        "200":
+          description: Fetch beliefStatement
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: string
+        "400":
+          description: Bad request
 
 components:
   schemas:
