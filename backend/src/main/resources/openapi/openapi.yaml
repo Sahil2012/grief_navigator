@@ -94,9 +94,67 @@ paths:
                   type: string
         "400":
           description: Bad request
+              
+    post:
+      operationId: saveBeliefStatements
+      summary: Save beliefStatement
+      tags:
+        - BeliefStatement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+              type: array
+              items:
+                type: string
+      responses:
+        "200":
+          description: Fetch beliefStatement
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: string
+        "400":
+          description: Bad request
+  
+  /beliefEntry:
+    post:
+      operationId: saveBeliefEntries
+      summary: Save Belief Entries for a user
+      tags:
+        - BeliefEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: 
+                $ref: '#/components/schemas/BeliefEntryDTO'
+      responses:
+        '200':
+          description: Entires Saved successfully
+        '400':
+          description: Bad Request
+
 
 components:
   schemas:
+    BeliefEntryDTO:
+      type: object
+      properties:
+        beliefStatementId: 
+          type: long
+        rating:
+          type: integer
+        relatedLosses:
+          type: array
+          items: 
+            type: long
     DifficultTimes:
       type: object
       properties:

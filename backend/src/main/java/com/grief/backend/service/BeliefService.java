@@ -34,6 +34,14 @@ public class BeliefService {
                     .collect(Collectors.toList());
     }
 
+    public void saveBeliefStatements(List<String> beliefStatements) {
+        List<BeliefStatement> entities = beliefStatements.stream()
+                                            .map(statement -> new BeliefStatement(statement, null))
+                                            .collect(Collectors.toList());
+        
+        beliefStatementRepository.saveAll(entities);
+    }
+
     private BeliefStatement findBeliefStatement(Long id) {
         return beliefStatementRepository.findById(id).get();
     }

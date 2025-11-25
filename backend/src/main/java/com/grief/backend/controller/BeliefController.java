@@ -29,6 +29,18 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
     }
 
     @Override
+    public ResponseEntity<List<String>> saveBeliefStatements(@Valid List<String> requestBody) {
+        try{
+            beliefService.saveBeliefStatements(requestBody);
+            return ResponseEntity.ok().build();
+        } catch(Exception e) {
+            log.error("Error saving belief statement",e);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @Override
     public ResponseEntity<Void> saveBeliefEntries(@Valid List<@Valid BeliefEntryDTO> beliefEntry) {
         try{
             beliefService.saveEntries(beliefEntry);
@@ -38,12 +50,6 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
         }
 
         return ResponseEntity.badRequest().build();
-    }
-
-    @Override
-    public ResponseEntity<List<String>> saveBeliefStatements(@Valid List<String> requestBody) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveBeliefStatements'");
     }
     
 }
