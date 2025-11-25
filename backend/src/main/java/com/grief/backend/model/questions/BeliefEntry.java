@@ -2,6 +2,7 @@ package com.grief.backend.model.questions;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +15,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
-@Table(name = "belief_entries")
+@Builder
+@Table(name = "belief_entries", uniqueConstraints = @UniqueConstraint(columnNames = {"statement_id","app_user_id"}))
 public class BeliefEntry extends BaseEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

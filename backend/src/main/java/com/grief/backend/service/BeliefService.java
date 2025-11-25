@@ -5,15 +5,26 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.grief.backend.generated.model.dto.BeliefEntryDTO;
+import com.grief.backend.model.AppUser;
+import com.grief.backend.model.questions.BeliefEntry;
+import com.grief.backend.model.questions.BeliefStatement;
+import com.grief.backend.repository.BeliefEntryRepository;
 import com.grief.backend.repository.BeliefStatementRepository;
 
 @Service
 public class BeliefService {
     
     private BeliefStatementRepository beliefStatementRepository;
+    private BeliefEntryRepository beliefEntryRepository;
+    private CurrentUser currentUser;
+    private LossService lossService;
 
-    public BeliefService(BeliefStatementRepository beliefStatementRepository) {
+    public BeliefService(BeliefStatementRepository beliefStatementRepository, BeliefEntryRepository beliefEntryRepository, CurrentUser currentUser, LossService lossService) {
         this.beliefStatementRepository = beliefStatementRepository;
+        this.beliefEntryRepository = beliefEntryRepository;
+        this.currentUser = currentUser;
+        this.lossService = lossService;
     }
 
     public List<String> getAllStatement() {
@@ -21,5 +32,27 @@ public class BeliefService {
                     .stream()
                     .map(statement -> statement.getText())
                     .collect(Collectors.toList());
+    }
+
+    private BeliefStatement findBeliefStatement(Long id) {
+        return beliefStatementRepository.findById(id).get();
+    }
+
+    public void saveEntries(List<BeliefEntryDTO> beliefEntries) {
+        AppUser appUser = currentUser.getCurrentAppUser();
+
+        List<BeliefEntry> entites = beliefEntries
+                                        .stream()
+                                        .map(dto -> 
+                                             BeliefEntry.builder()
+                                                    .appUser(appUser)
+                                                    .rating(dto.getRating())
+                                                    .relatedLosses(lossService.getLosses(dto.getRelatedLosses()))
+                                                    .statement(findBeliefStatement(dto.getBeliefStatementId()))
+                                                    .build())
+                                        .collect(Collectors.toList());
+
+        beliefEntryRepository.saveAll(entites);
+
     }
 }

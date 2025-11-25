@@ -1,6 +1,7 @@
 package com.grief.backend.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -41,20 +42,24 @@ public class LossService {
         lossRepository
                 .saveAll(
                         losses
-                                .stream()
-                                .map(dto -> {
-                                    return Loss.builder()
-                                            .appUser(appUser)
-                                            .type(dto.getType())
-                                            .description(dto.getDescription())
-                                            .difficulty(dto.getDifficulty())
-                                            .time(dto.getTime())
-                                            .build();
-                                }).collect(Collectors.toList()));
+                            .stream()
+                            .map(dto -> 
+                                Loss.builder()
+                                    .appUser(appUser)
+                                    .type(dto.getType())
+                                    .description(dto.getDescription())
+                                    .difficulty(dto.getDifficulty())
+                                    .time(dto.getTime())
+                                    .build()
+                            ).collect(Collectors.toList()));
 
     }
 
     public Loss getLoss(Long lossId) {
         return lossRepository.findById(lossId).get();
+    }
+
+    public Set<Loss> getLosses(List<Long> relatedLoss) {
+        return lossRepository.findAllLosses(relatedLoss);   
     }
 }
