@@ -187,9 +187,92 @@ paths:
           description: "Avoidence Entires saved successfully"
         "400":
           description: "Bad Request"
+  
+  /familyConflict/{sectionId}:
+    get:
+      operationId: getQuestions
+      tags:
+        - Family Conflict 
+      parameters:
+        - name: sectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fieldId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Family Conflict Questions fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FamilyConflictShallowQuestionDTO'
+        "400":
+          description: "Bad Request"
+  
+  /familyConflict:
+    post:
+      operationId: saveQuestions
+      tags:
+        - Family Conflict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FamilyConflictQuestionDTO'
+      responses:
+        "200":
+          description: "Saved Questions successfully"
+        "400": 
+          description: "Bad Request"
+                
 
 components:
   schemas:
+    FamilyConflictQuestionDTO:
+      type: object
+      properties:
+        sectionId:
+          type: string
+        fieldId:
+          type: string
+        question:
+          type: string
+        type:
+          $ref: '#/components/schemas/QuestionType'
+        options:
+          type: array
+          items:
+            type: string
+      required:
+        - fieldId
+        - question
+        - type
+        - sectionId
+    FamilyConflictShallowQuestionDTO:
+      type: object
+      properties:
+        fieldId:
+          type: string
+        question:
+          type: string
+        sectionId:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        type:
+          $ref: '#/components/schemas/QuestionType'
     AvoidenceEntryDTO:
       type: object
       properties:
@@ -237,6 +320,13 @@ components:
         - description
         - difficulty
         - time
+    QuestionType:
+      type: string
+      enum:
+        - DESCRIPTIVE
+        - RADIO
+        - MCQ
+        - MCQ_MULTI
     LossType:
       type: string
       enum:

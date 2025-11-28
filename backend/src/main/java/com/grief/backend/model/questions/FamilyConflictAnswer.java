@@ -36,23 +36,6 @@ public class FamilyConflictAnswer extends BaseEntity {
     @Column(name = "value_text", columnDefinition = "TEXT")
     private String valueText;       // free-text / long text
 
-    @Column(name = "value_single", length = 200)
-    private String valueSingle;     // radio selection or short text answer
-
-    /**
-     * Stored as JSON (jsonb) in Postgres. Keep as String here to avoid extra dependencies.
-     * Example valueMulti: '["Option A", "Option B"]'
-     * If you want automatic mapping to List<String>, add hibernate-types and use @Type(JsonType.class).
-     */
-    @Column(name = "value_multi", columnDefinition = "jsonb")
-    private String valueMulti;
-
-    @Column(name = "conditional_parent_field", length = 200)
-    private String conditionalParentField; // e.g., parent's field id (only shown if parent=true)
-
-    @Column(name = "notes", columnDefinition = "TEXT")
-    private String notes;
-
     @Column(name = "created_at_answer", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime createdAt_answer = OffsetDateTime.now();
 
