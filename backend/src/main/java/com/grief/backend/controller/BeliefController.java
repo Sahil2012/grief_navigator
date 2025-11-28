@@ -29,7 +29,7 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
     }
 
     @Override
-    public ResponseEntity<List<String>> saveBeliefStatements(@Valid List<String> requestBody) {
+    public ResponseEntity<Void> saveBeliefStatements(@Valid List<String> requestBody) {
         try{
             beliefService.saveBeliefStatements(requestBody);
             return ResponseEntity.ok().build();

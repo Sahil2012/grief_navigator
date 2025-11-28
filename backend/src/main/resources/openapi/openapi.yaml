@@ -105,19 +105,12 @@ paths:
         content:
           application/json:
             schema:
-              properties:
               type: array
               items:
                 type: string
       responses:
         "200":
           description: Fetch beliefStatement
-          content:
-            application/json:
-              schema:
-                type: array
-                items: 
-                  type: string
         "400":
           description: Bad request
   
@@ -141,9 +134,73 @@ paths:
         '400':
           description: Bad Request
 
+  /avoidenceStatement:
+    post:
+      operationId: saveAvoidenceStatements
+      tags:
+        - Avoidence Statement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        "200":
+          description: "Avoidence Statements saved successfully"
+        "400":
+          description: "Bad request"
+
+    get:
+      operationId: getAvoidenceStatements
+      tags:
+        - Avoidence Statement
+      responses:
+        "200":
+          description: "Avoidence Statement fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "400":
+          description: "Bad Request"
+
+  /avoidenceEntry:
+    post:
+      operationId: saveAvoidenceEntries
+      tags:
+        - Avoidence Entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvoidenceEntryDTO'
+      responses:
+        "200":
+          description: "Avoidence Entires saved successfully"
+        "400":
+          description: "Bad Request"
 
 components:
   schemas:
+    AvoidenceEntryDTO:
+      type: object
+      properties:
+        avoidenceStatementId:
+          type: long
+        rating:
+          type: integer
+        relatedLosses:
+          type: array
+          items:
+            type: long
     BeliefEntryDTO:
       type: object
       properties:

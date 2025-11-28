@@ -21,7 +21,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**", "/webhooks/**","/beliefStatement").permitAll()
+                        .requestMatchers("/public/**", "/webhooks/**","/beliefStatement","/avoidenceStatement").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
