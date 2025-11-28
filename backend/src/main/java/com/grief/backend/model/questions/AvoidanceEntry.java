@@ -1,6 +1,9 @@
 package com.grief.backend.model.questions;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +24,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Builder
 @Table(name = "avoidance_entries")
 public class AvoidanceEntry extends BaseEntity {
 
@@ -32,6 +37,9 @@ public class AvoidanceEntry extends BaseEntity {
     private AvoidanceStatement statement;
 
     // 0-4 or null for N/A
+    @Min(value = 0, message = "rating can not be below 0")
+    @Max(value = 4, message = "rating can not be higher than 4")
+    @Column(nullable = true)
     private Integer frequencyRating;
 
     @ManyToMany

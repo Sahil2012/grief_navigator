@@ -31,4 +31,9 @@ public class AvoidenceStatementService {
                                                 .collect(Collectors.toList()));
 
     }
+
+    public AvoidanceStatement getAllAvoidences(Long ids) {
+
+        return avoidenceStatementRepository.getReferenceById(ids);
+    }
 }
