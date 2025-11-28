@@ -13,14 +13,18 @@ import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "family_conflict_questions", indexes = {
         @Index(columnList = "sectionId") }, uniqueConstraints = @UniqueConstraint(columnNames = { "section_id",
                 "field_id" }))

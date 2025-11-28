@@ -24,13 +24,6 @@ public class FamilyConflictController implements FamilyConflictApi{
     }
 
     @Override
-    public ResponseEntity<List<FamilyConflictShallowQuestionDTO>> getQuestions(String sectionId,
-            @Valid String fieldId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestions'");
-    }
-
-    @Override
     public ResponseEntity<Void> saveQuestions(@Valid List<@Valid FamilyConflictQuestionDTO> familyConflictQuestionDTO) {
         
         try{
@@ -40,6 +33,13 @@ public class FamilyConflictController implements FamilyConflictApi{
             log.error("Error saving Questions {}", e.getMessage());
         }
         return ResponseEntity.badRequest().build();
+    }
+
+
+
+    @Override
+    public ResponseEntity<List<FamilyConflictQuestionDTO>> getQuestions(String sectionId, @Valid String fieldId) {
+        return ResponseEntity.ok().body(familyConflictService.fetchQuestions(sectionId, fieldId));
     }
     
 }

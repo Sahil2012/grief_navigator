@@ -212,7 +212,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FamilyConflictShallowQuestionDTO'
+                  $ref: '#/components/schemas/FamilyConflictQuestionDTO'
         "400":
           description: "Bad Request"
   
@@ -258,21 +258,6 @@ components:
         - question
         - type
         - sectionId
-    FamilyConflictShallowQuestionDTO:
-      type: object
-      properties:
-        fieldId:
-          type: string
-        question:
-          type: string
-        sectionId:
-          type: string
-        options:
-          type: array
-          items:
-            type: string
-        type:
-          $ref: '#/components/schemas/QuestionType'
     AvoidenceEntryDTO:
       type: object
       properties:
