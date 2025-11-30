@@ -29,7 +29,7 @@ public class LossService {
         return losses
                 .stream()
                 .map(loss -> {
-                    return new LossDTO(loss.getType(), loss.getDescription(), loss.getDifficulty(),
+                    return new LossDTO(loss.getId(),loss.getType(), loss.getDescription(), loss.getDifficulty(),
                             loss.getTime());
                 }).toList();
 
