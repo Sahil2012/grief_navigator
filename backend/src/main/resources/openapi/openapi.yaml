@@ -337,6 +337,8 @@ components:
     LossDTO:
       type: object
       properties:
+        id:
+          type: long
         type:
           $ref: "#/components/schemas/LossType"
         description:
