@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,11 +33,11 @@ public class FamilyConflictAssessment extends BaseEntity {
     @Column(name = "trigger_reason", columnDefinition = "TEXT")
     private String triggerReason; // e.g., "Concerning separation feelings"
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    @Column(name = "assessment_created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime assessmentCreatedAt = OffsetDateTime.now();
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime updatedAt = OffsetDateTime.now();
+    @Column(name = "assessment_updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime assessmentUpdatedAt = OffsetDateTime.now();
 
     // Cached/persisted result
     @Column(name = "risk_score")

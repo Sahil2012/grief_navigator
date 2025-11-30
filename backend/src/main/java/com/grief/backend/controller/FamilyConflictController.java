@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grief.backend.generated.api.FamilyConflictApi;
 import com.grief.backend.generated.model.dto.FamilyConflictQuestionDTO;
-import com.grief.backend.generated.model.dto.FamilyConflictShallowQuestionDTO;
 import com.grief.backend.service.FamilyConflictService;
 
 import jakarta.validation.Valid;

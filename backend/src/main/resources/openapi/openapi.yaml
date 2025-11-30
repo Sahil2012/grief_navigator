@@ -234,7 +234,52 @@ paths:
           description: "Saved Questions successfully"
         "400": 
           description: "Bad Request"
-                
+  
+  /familyConflictAssessment/start:
+    post:
+      operationId: startAssessment
+      tags:
+        - Family Conflict Assessment 
+      responses:
+        "200":
+          description: "Assessment started successfully"
+          content:
+            application/json:
+              schema:
+                type: long
+        "400":
+          description: "Bad Request"
+
+  /familyConflictAssessment:
+    get:
+      operationId: getAssessment
+      tags:
+        - Family Conflict Assessment
+      responses:
+        "200":
+          description: "Assessment fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: "Bad Request"
+  
+  /familyConflictAssessment/complete:
+    patch:
+      operationId: completeAssessment
+      tags:
+        - Family Conflict Assessment
+      parameters:
+        - name: assessmentId
+          in: query
+          schema:
+            type: long
+      responses:
+        "200":
+          description: "Assessment Completed successfully"
+        "400":
+          description: "Bad Request"
 
 components:
   schemas:
