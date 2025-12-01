@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-@Table(name = "belief_entries", uniqueConstraints = @UniqueConstraint(columnNames = {"statement_id","app_user_id"}))
+@Table(name = "belief_entries", uniqueConstraints = @UniqueConstraint(columnNames = {"statement_id","app_user_id","related_loss"}))
 public class BeliefEntry extends BaseEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -38,9 +38,7 @@ public class BeliefEntry extends BaseEntity {
     private Integer rating;
 
     // link to multiple losses - join table
-    @ManyToMany
-    @JoinTable(name = "belief_entry_losses",
-        joinColumns = @JoinColumn(name = "belief_entry_id"),
-        inverseJoinColumns = @JoinColumn(name = "loss_id"))
-    private Set<Loss> relatedLosses = new HashSet<>();
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "related_loss", nullable = false)
+    private Loss relatedLoss;
 }

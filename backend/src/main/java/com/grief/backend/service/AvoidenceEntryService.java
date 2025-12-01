@@ -40,7 +40,7 @@ public class AvoidenceEntryService {
                                                             .appUser(appUser)
                                                             .statement(avoidenceStatementService.getAllAvoidences(dto.getAvoidenceStatementId()))
                                                             .frequencyRating(dto.getRating())
-                                                            .relatedLosses(lossService.getLosses(dto.getRelatedLosses()))
+                                                            .relatedLoss(lossService.getLoss(dto.getRelatedLoss()))
                                                             .build())
                                             .collect(Collectors.toList());
 

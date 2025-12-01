@@ -2,6 +2,7 @@ package com.grief.backend.model.questions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "avoidance_entries")
+@Table(name = "avoidance_entries", uniqueConstraints = @UniqueConstraint(columnNames = {"app_user_id","statement_id","related_loss"}))
 public class AvoidanceEntry extends BaseEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -42,10 +43,8 @@ public class AvoidanceEntry extends BaseEntity {
     @Column(nullable = true)
     private Integer frequencyRating;
 
-    @ManyToMany
-    @JoinTable(name = "avoidance_entry_losses",
-        joinColumns = @JoinColumn(name = "avoidance_entry_id"),
-        inverseJoinColumns = @JoinColumn(name = "loss_id"))
-    private Set<Loss> relatedLosses = new HashSet<>();
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "related_loss", nullable = false)
+    private Loss relatedLoss;
 
 }

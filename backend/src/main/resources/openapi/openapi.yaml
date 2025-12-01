@@ -310,10 +310,8 @@ components:
           type: long
         rating:
           type: integer
-        relatedLosses:
-          type: array
-          items:
-            type: long
+        relatedLoss:
+          type: long
     BeliefEntryDTO:
       type: object
       properties:
@@ -321,10 +319,8 @@ components:
           type: long
         rating:
           type: integer
-        relatedLosses:
-          type: array
-          items: 
-            type: long
+        relatedLoss:
+          type: long
     DifficultTimes:
       type: object
       properties:

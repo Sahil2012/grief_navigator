@@ -55,7 +55,7 @@ public class BeliefService {
                                              BeliefEntry.builder()
                                                     .appUser(appUser)
                                                     .rating(dto.getRating())
-                                                    .relatedLosses(lossService.getLosses(dto.getRelatedLosses()))
+                                                    .relatedLoss(lossService.getLoss(dto.getRelatedLoss()))
                                                     .statement(findBeliefStatement(dto.getBeliefStatementId()))
                                                     .build())
                                         .collect(Collectors.toList());

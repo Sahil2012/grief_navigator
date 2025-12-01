@@ -60,8 +60,4 @@ public class LossService {
     public Loss getLoss(Long lossId) {
         return lossRepository.findById(lossId).get();
     }
-
-    public Set<Loss> getLosses(List<Long> relatedLoss) {
-        return lossRepository.findAllLosses(relatedLoss);   
-    }
 }
