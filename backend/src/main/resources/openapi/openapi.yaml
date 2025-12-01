@@ -91,7 +91,7 @@ paths:
               schema:
                 type: array
                 items: 
-                  type: string
+                  type: object
         "400":
           description: Bad request
               
@@ -165,7 +165,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
+                  type: object
         "400":
           description: "Bad Request"
 

@@ -1,6 +1,8 @@
 package com.grief.backend.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -17,10 +19,15 @@ public class AvoidenceStatementService {
         this.avoidenceStatementRepository = avoidenceStatementRepository;
     }
 
-    public List<String> fetchAvoidenceStatements() {
+    public List<Object> fetchAvoidenceStatements() {
         return avoidenceStatementRepository.findAll()
                     .stream()
-                    .map(statement -> statement.getText())
+                    .map(statement -> {
+                        Map<String,String> avoidence = new HashMap<>();
+                        avoidence.put("id", statement.getId().toString());
+                        avoidence.put("statement", statement.getText());
+                        return avoidence;
+                    })
                     .collect(Collectors.toList());
     }
 

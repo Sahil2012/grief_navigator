@@ -22,7 +22,7 @@ public class AvoidenceStatementController implements AvoidenceStatementApi {
     }
 
     @Override
-    public ResponseEntity<List<String>> getAvoidenceStatements() {
+    public ResponseEntity<List<Object>> getAvoidenceStatements() {
         return ResponseEntity.ok().body(
             avoidenceStatementService.fetchAvoidenceStatements()
         );    

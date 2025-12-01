@@ -24,7 +24,7 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
     }
 
     @Override
-    public ResponseEntity<List<String>> getBeliefStatements() {
+    public ResponseEntity<List<Object>> getBeliefStatements() {
         return ResponseEntity.ok().body(beliefService.getAllStatement());
     }
 

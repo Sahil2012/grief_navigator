@@ -1,6 +1,8 @@
 package com.grief.backend.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -27,10 +29,15 @@ public class BeliefService {
         this.lossService = lossService;
     }
 
-    public List<String> getAllStatement() {
+    public List<Object> getAllStatement() {
         return beliefStatementRepository.findAll()
                     .stream()
-                    .map(statement -> statement.getText())
+                    .map(statement -> {
+                        Map<String,String> belief = new HashMap<>();
+                        belief.put("id", statement.getId().toString());
+                        belief.put("statement", statement.getText());
+                        return belief;
+                    })
                     .collect(Collectors.toList());
     }
 
