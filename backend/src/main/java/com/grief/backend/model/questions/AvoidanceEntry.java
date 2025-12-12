@@ -1,22 +1,16 @@
 package com.grief.backend.model.questions;
+import com.grief.backend.model.AppUser;
+import com.grief.backend.model.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import com.grief.backend.model.AppUser;
-import com.grief.backend.model.BaseEntity;
-
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
