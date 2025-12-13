@@ -281,8 +281,50 @@ paths:
         "400":
           description: "Bad Request"
 
+  /profile/cyge/readiness:
+    get:
+      operationId: getCYGECompletionStatus
+      summary: Get CYGE Completion Status
+      tags:
+        - CYGE
+      responses:
+        "200":
+          description: "CYGE Completed successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletionStatus'
+        "400":
+          description: "Bad Request"
+  /profile/cyge/complete:
+    patch:
+      operationId: completeCYGE
+      summary: Mark CYGE as complete
+      tags:
+        - CYGE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionStatus'
+      responses:
+        "200":
+          description: "CYGE marked as complete successfully"
+        "400":
+          description: "Bad Request"
+  
 components:
   schemas:
+    CompletionStatus:
+      type: string
+      enum:
+        - COMPLETED
+        - LOSS_PENDING
+        - DIFFICULTY_PENDING
+        - BELIEF_PENDING
+        - AVOIDENCE_PENDING
+        - FAMILY_CONFLICT_PENDING
     FamilyConflictQuestionDTO:
       type: object
       properties:

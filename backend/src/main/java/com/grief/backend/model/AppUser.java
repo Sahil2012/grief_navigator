@@ -1,7 +1,11 @@
 package com.grief.backend.model;
 
+import com.grief.backend.generated.model.dto.CompletionStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -22,6 +26,7 @@ public class AppUser extends BaseEntity {
 
     private String timezone;
 
-    private String completionState;
+    @Enumerated(EnumType.STRING)
+    private CompletionStatus completionState = CompletionStatus.LOSS_PENDING;
 
 }
