@@ -234,6 +234,25 @@ paths:
           description: "Saved Questions successfully"
         "400": 
           description: "Bad Request"
+
+  /familyConflict/answer:
+    post:
+      operationId: saveAnswers
+      tags:
+        - Family Conflict 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FamilyConflictAnswerDTO'
+      responses:
+        "200":
+          description: "Answers saved successfully"
+        "400":
+          description: "Bad Request"  
   
   /familyConflictAssessment/start:
     post:
@@ -296,6 +315,7 @@ paths:
                 $ref: '#/components/schemas/CompletionStatus'
         "400":
           description: "Bad Request"
+  
   /profile/cyge/complete:
     patch:
       operationId: completeCYGE
@@ -316,6 +336,19 @@ paths:
   
 components:
   schemas:
+    FamilyConflictAnswerDTO:
+        type: object
+        properties:
+          assessmentId:
+            type: long
+          questionId:
+            type: long
+          valueText:
+            type: string
+        required:
+          - questionId
+          - valueText
+          - assessmentId
     CompletionStatus:
       type: string
       enum:
@@ -328,6 +361,8 @@ components:
     FamilyConflictQuestionDTO:
       type: object
       properties:
+        id: 
+          type: long
         sectionId:
           type: string
         fieldId:

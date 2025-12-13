@@ -11,12 +11,18 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "family_conflict_answers",
        indexes = {
          @Index(columnList = "assessment_id")       })
@@ -29,9 +35,6 @@ public class FamilyConflictAnswer extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "question_id")
     private FamilyConflictQuestions question;
-
-    @Column(name = "control_type", nullable = false, length = 50)
-    private String controlType;     // radio | checkbox | textarea
 
     @Column(name = "value_text", columnDefinition = "TEXT")
     private String valueText;       // free-text / long text

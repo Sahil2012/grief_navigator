@@ -25,6 +25,10 @@ public class FamilyConflictAssessmentService {
         this.currentUser = currentUser;
     }
 
+    public FamilyConflictAssessmentCYGE getAssessmentById(Long assessmentId) {
+        return repository.findById(assessmentId).get();
+    }
+
     public Long createAssessment() {
         AppUser appUser = currentUser.getCurrentAppUser();
 
