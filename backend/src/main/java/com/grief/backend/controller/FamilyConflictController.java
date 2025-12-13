@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grief.backend.generated.api.FamilyConflictApi;
+import com.grief.backend.generated.model.dto.FamilyConflictAnswerDTO;
 import com.grief.backend.generated.model.dto.FamilyConflictQuestionDTO;
 import com.grief.backend.service.FamilyConflictService;
 
@@ -34,11 +35,20 @@ public class FamilyConflictController implements FamilyConflictApi{
         return ResponseEntity.badRequest().build();
     }
 
-
-
     @Override
     public ResponseEntity<List<FamilyConflictQuestionDTO>> getQuestions(String sectionId, @Valid String fieldId) {
         return ResponseEntity.ok().body(familyConflictService.fetchQuestions(sectionId, fieldId));
+    }
+
+    @Override
+    public ResponseEntity<Void> saveAnswers(@Valid List<@Valid FamilyConflictAnswerDTO> familyConflictAnswerDTO) {
+        try{
+            familyConflictService.saveAnswers(familyConflictAnswerDTO);
+            return ResponseEntity.ok().build();
+        } catch(Exception e) {
+            log.error("Error saving Answers {}", e.getMessage());
+        }
+        return ResponseEntity.internalServerError().build();
     }
     
 }
