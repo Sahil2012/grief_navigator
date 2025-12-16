@@ -56,10 +56,10 @@ public class FamilyConflictService {
 
         List<FamilyConflictAnswer> answerEntities = answerDTOs.stream()
                 .map(dto -> FamilyConflictAnswer.builder()
-                                .assessment(familyConflictAssessmentService.getAssessmentById(dto.getAssessmentId()))
-                                .question(familyConflictRepository.findById(dto.getQuestionId()).get())
-                                .valueText(dto.getValueText())
-                                .build())
+                        .assessment(familyConflictAssessmentService.getAssessmentById(dto.getAssessmentId()))
+                        .question(familyConflictRepository.findById(dto.getQuestionId()).get())
+                        .valueText(dto.getValueText())
+                        .build())
                 .collect(Collectors.toList());
         familyConflictAnswerRepository.saveAll(answerEntities);
     }
