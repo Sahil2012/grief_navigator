@@ -15,17 +15,18 @@ import com.grief.backend.filter.JWTFilter;
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, JWTFilter filter) throws Exception {
+        @Bean
+        SecurityFilterChain filterChain(HttpSecurity http, JWTFilter filter) throws Exception {
 
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**", "/webhooks/**", "/beliefStatement", "/avoidenceStatement",
-                                "/familyConflict","/familyConflict/*")
-                        .permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+                return http
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/public/**", "/webhooks/**", "/beliefStatement",
+                                                                "/avoidenceStatement",
+                                                                "/familyConflict", "/familyConflict/*", "/health")
+                                                .permitAll()
+                                                .anyRequest().authenticated())
+                                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                                .build();
+        }
 }
