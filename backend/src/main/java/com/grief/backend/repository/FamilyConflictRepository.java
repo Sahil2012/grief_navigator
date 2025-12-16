@@ -9,11 +9,15 @@ import org.springframework.stereotype.Repository;
 import com.grief.backend.model.questions.FamilyConflictQuestions;
 
 @Repository
-public interface FamilyConflictRepository extends JpaRepository<FamilyConflictQuestions, Long>{
-    
-    @Query("SELECT q FROM FamilyConflictQuestions q WHERE q.sectionId = ?1")
+public interface FamilyConflictRepository extends JpaRepository<FamilyConflictQuestions, Long> {
+
+    @Query("SELECT q FROM FamilyConflictQuestions q LEFT JOIN FETCH q.options WHERE q.sectionId = ?1")
     List<FamilyConflictQuestions> findQuestionForSection(String sectionId);
-    
-    @Query("SELECT q FROM FamilyConflictQuestions q WHERE q.sectionId = ?1 AND fieldId = ?2")
+
+    @Query("SELECT q FROM FamilyConflictQuestions q LEFT JOIN FETCH q.options WHERE q.sectionId = ?1 AND q.fieldId = ?2")
     FamilyConflictQuestions findQuestionByFeildIdForSection(String sectionId, String fieldId);
+
+    @Override
+    @Query("SELECT DISTINCT q FROM FamilyConflictQuestions q LEFT JOIN FETCH q.options")
+    List<FamilyConflictQuestions> findAll();
 }
