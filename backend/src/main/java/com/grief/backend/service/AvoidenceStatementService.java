@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.grief.backend.model.questions.AvoidanceStatement;
@@ -12,30 +13,31 @@ import com.grief.backend.repository.AvoidenceStatementRepository;
 
 @Service
 public class AvoidenceStatementService {
-    
+
     private AvoidenceStatementRepository avoidenceStatementRepository;
 
     public AvoidenceStatementService(AvoidenceStatementRepository avoidenceStatementRepository) {
         this.avoidenceStatementRepository = avoidenceStatementRepository;
     }
 
+    @Cacheable("avoidenceStatements")
     public List<Object> fetchAvoidenceStatements() {
         return avoidenceStatementRepository.findAll()
-                    .stream()
-                    .map(statement -> {
-                        Map<String,String> avoidence = new HashMap<>();
-                        avoidence.put("id", statement.getId().toString());
-                        avoidence.put("statement", statement.getText());
-                        return avoidence;
-                    })
-                    .collect(Collectors.toList());
+                .stream()
+                .map(statement -> {
+                    Map<String, String> avoidence = new HashMap<>();
+                    avoidence.put("id", statement.getId().toString());
+                    avoidence.put("statement", statement.getText());
+                    return avoidence;
+                })
+                .collect(Collectors.toList());
     }
 
     public void saveAvoidenceStatements(List<String> avoidenceStatements) {
 
         avoidenceStatementRepository.saveAll(avoidenceStatements.stream()
-                                                .map(statement -> new AvoidanceStatement(statement,null))
-                                                .collect(Collectors.toList()));
+                .map(statement -> new AvoidanceStatement(statement, null))
+                .collect(Collectors.toList()));
 
     }
 

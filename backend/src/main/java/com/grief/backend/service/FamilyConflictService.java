@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.grief.backend.generated.model.dto.FamilyConflictAnswerDTO;
@@ -33,6 +34,7 @@ public class FamilyConflictService {
         this.familyConflictAssessmentService = familyConflictAssessmentService;
     }
 
+    @Cacheable(value = "familyConflictQuestions", key = "#sectionId")
     public List<FamilyConflictQuestionDTO> fetchQuestions(String sectionId, String fieldId) {
         if (fieldId == null || fieldId.isBlank()) {
             return fetchQuestionsForSection(sectionId);
