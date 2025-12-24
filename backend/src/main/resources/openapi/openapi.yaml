@@ -334,8 +334,69 @@ paths:
         "400":
           description: "Bad Request"
   
+  /checkin:
+    post:
+      operationId: saveDailyCheckin
+      tags:
+        - Daily Checkin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/DailyCheckinDTO'
+      responses:
+        "200":
+          description: "Daily Checkin saved successfully"
+        "400":
+          description: "Bad Request"
+  
+  /checkin/status:
+    get:
+      operationId: getDailyCheckinStatus
+      tags:
+        - Daily Checkin
+      parameters:
+        - name: checkInDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: "Daily Checkin status fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "400":
+          description: "Bad Request"
+  
 components:
   schemas:
+    DailyCheckinDTO:
+      type: object
+      properties:
+        lossId:
+          type: long
+        checkInDate:
+          type: string
+          format: date
+        griefIntensity:
+          type: integer
+          minimum: 0
+          maximum: 10
+        emotionsCsv:
+          type: string
+        notes:
+          type: string
+      required:
+        - lossId
+        - checkInDate
+        - griefIntensity
+        - emotionsCsv
     FamilyConflictAnswerDTO:
         type: object
         properties:

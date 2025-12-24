@@ -43,20 +43,23 @@ public class LossService {
         lossRepository
                 .saveAll(
                         losses
-                            .stream()
-                            .map(dto -> 
-                                Loss.builder()
-                                    .appUser(appUser)
-                                    .type(dto.getType())
-                                    .description(dto.getDescription())
-                                    .difficulty(dto.getDifficulty())
-                                    .time(dto.getTime())
-                                    .build()
-                            ).collect(Collectors.toList()));
+                                .stream()
+                                .map(dto -> Loss.builder()
+                                        .appUser(appUser)
+                                        .type(dto.getType())
+                                        .description(dto.getDescription())
+                                        .difficulty(dto.getDifficulty())
+                                        .time(dto.getTime())
+                                        .build())
+                                .collect(Collectors.toList()));
 
     }
 
     public Loss getLoss(Long lossId) {
         return lossRepository.findById(lossId).get();
+    }
+
+    public Loss getLossByUserIdAndId(String appUserId, Long lossId) {
+        return lossRepository.findByUserIdAndId(appUserId, lossId);
     }
 }

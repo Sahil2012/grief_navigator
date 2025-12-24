@@ -13,13 +13,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "daily_checkins", uniqueConstraints = @UniqueConstraint(columnNames = {"app_user_id", "check_in_date"}))
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "daily_checkins", uniqueConstraints = @UniqueConstraint(columnNames = { "app_user_id", "check_in_date" }))
 public class DailyCheckin extends BaseEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -34,7 +40,8 @@ public class DailyCheckin extends BaseEntity {
 
     private Integer griefIntensity; // 0-10
 
-    // store emotion codes in a JSON/text column or normalized table. simple CSV here.
+    // store emotion codes in a JSON/text column or normalized table. simple CSV
+    // here.
     @Column(length = 1000)
     private String emotionsCsv;
 
