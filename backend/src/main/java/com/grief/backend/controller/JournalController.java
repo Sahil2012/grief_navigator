@@ -25,24 +25,26 @@ public class JournalController implements JournalEntryApi {
 
     @Override
     public ResponseEntity<Void> deleteJournalEntry(Long id) {
+        log.info("Request received for deleteJournalEntry with id: {}", id);
         journalService.deleteJournalEntry(id);
         return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<JournalEntryDTO> getJournalEntry(Long id) {
-        log.info("Fetching journal entry with id {}", id);
+        log.info("Request received for getJournalEntry with id: {}", id);
         return ResponseEntity.ok(journalService.findByIdForUser(id));
     }
 
     @Override
     public ResponseEntity<Long> saveJournalEntry(@Valid JournalEntryDTO journalEntryDTO) {
-        log.info("Saving journal entry for {}", journalEntryDTO);
+        log.info("Request received for saveJournalEntry with payload: {}", journalEntryDTO);
         return ResponseEntity.ok(journalService.saveJournalEntry(journalEntryDTO));
     }
 
     @Override
     public ResponseEntity<Void> updateJournalEntry(Long id, @Valid JournalEntryDTO journalEntryDTO) {
+        log.info("Request received for updateJournalEntry with id: {} and payload: {}", id, journalEntryDTO);
         journalService.updateJournalEntry(id, journalEntryDTO);
         return ResponseEntity.ok().build();
     }
@@ -50,6 +52,8 @@ public class JournalController implements JournalEntryApi {
     @Override
     public ResponseEntity<List<JournalEntryDTO>> getJournalEntries(@Valid LocalDate startDate, @Valid LocalDate endDate,
             @Valid Integer page, @Valid Integer size) {
+        log.info("Request received for getJournalEntries with startDate: {}, endDate: {}, page: {}, size: {}",
+                startDate, endDate, page, size);
         return ResponseEntity.ok(journalService.getJournalEntries(startDate, endDate, page, size));
     }
 

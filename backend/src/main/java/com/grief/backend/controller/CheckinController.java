@@ -25,13 +25,13 @@ public class CheckinController implements CheckinApi {
 
     @Override
     public ResponseEntity<Boolean> getDailyCheckinStatus(@NotNull @Valid LocalDate checkInDate) {
-        log.info("Checking checkin status for user {}", checkInDate);
+        log.info("Request received for getDailyCheckinStatus with payload: {}", checkInDate);
         return ResponseEntity.ok(checkinService.isUserCheckedInToday(checkInDate));
     }
 
     @Override
     public ResponseEntity<Void> saveDailyCheckin(@Valid DailyCheckinDTO dailyCheckinDTO) {
-        log.info("Saving checkin for user {}", dailyCheckinDTO.getCheckInDate());
+        log.info("Request received for saveDailyCheckin with payload: {}", dailyCheckinDTO);
         checkinService.saveCheckinIfNotCheckedInToday(dailyCheckinDTO);
         return ResponseEntity.ok().build();
     }

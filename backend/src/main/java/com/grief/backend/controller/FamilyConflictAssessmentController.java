@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class FamilyConflictAssessmentController implements FamilyConflictAssessmentApi{
-    
+public class FamilyConflictAssessmentController implements FamilyConflictAssessmentApi {
+
     private FamilyConflictAssessmentService service;
 
     public FamilyConflictAssessmentController(FamilyConflictAssessmentService service) {
@@ -25,6 +25,7 @@ public class FamilyConflictAssessmentController implements FamilyConflictAssessm
 
     @Override
     public ResponseEntity<Void> completeAssessment(@Valid Long assessmentId) {
+        log.info("Request received for completeAssessment with assessmentId: {}", assessmentId);
         try {
             service.completeAssessment(assessmentId);
             return ResponseEntity.ok().build();
@@ -37,12 +38,14 @@ public class FamilyConflictAssessmentController implements FamilyConflictAssessm
 
     @Override
     public ResponseEntity<Object> getAssessment() {
+        log.info("Request received for getAssessment");
         List<FamilyConflictAssessmentCYGE> assessments = service.getAllAssessmentsForUser();
         return ResponseEntity.ok(assessments);
     }
 
     @Override
     public ResponseEntity<Long> startAssessment() {
+        log.info("Request received for startAssessment");
         try {
             return ResponseEntity.ok(service.createAssessment());
         } catch (Exception e) {

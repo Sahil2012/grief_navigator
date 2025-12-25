@@ -36,7 +36,7 @@ public class JournalService {
     }
 
     public JournalEntryDTO findByIdForUser(Long id) {
-        log.info("Fetching journal entry for user {}", currentUser.getCurrentAppUser().getId());
+        log.info("Executing findByIdForUser with args: {}", id);
         JournalEntry journalEntry = journalRepository.findByIdForUser(id, currentUser.getCurrentAppUser().getId());
         log.info("Converting journal entry to dto");
         return journalMapper.toDTO(journalEntry);
@@ -47,7 +47,7 @@ public class JournalService {
             log.info("Journal entry with title {} already exists", journalEntryDTO.getTitle());
             return -1L;
         }
-        log.info("Saving journal entry for user {}", currentUser.getCurrentAppUser().getId());
+        log.info("Executing saveJournalEntry with args: {}", journalEntryDTO);
         JournalEntry journalEntry = journalRepository.save(JournalEntry.builder()
                 .appUser(currentUser.getCurrentAppUser())
                 .entryDate(LocalDateTime.from(journalEntryDTO.getEntryDate()))
@@ -60,13 +60,13 @@ public class JournalService {
 
     @Transactional
     public boolean deleteJournalEntry(Long id) {
-        log.info("Deleting journal entry for user {}", currentUser.getCurrentAppUser().getId());
+        log.info("Executing deleteJournalEntry with args: {}", id);
         journalRepository.deleteJournalEntryForUser(id, currentUser.getCurrentAppUser().getId());
         return true;
     }
 
     public void updateJournalEntry(Long id, JournalEntryDTO journalEntryDTO) {
-        log.info("Updating journal entry {} for user {}", id, currentUser.getCurrentAppUser().getId());
+        log.info("Executing updateJournalEntry with args: id={}, journalEntryDTO={}", id, journalEntryDTO);
         JournalEntry journalEntry = journalRepository.findByIdForUser(id, currentUser.getCurrentAppUser().getId());
         if (journalEntry == null) {
             throw new IllegalArgumentException("Journal entry not found or access denied");
@@ -82,7 +82,8 @@ public class JournalService {
     }
 
     public List<JournalEntryDTO> getJournalEntries(LocalDate startDate, LocalDate endDate, Integer page, Integer size) {
-        log.info("Fetching journal entries for user {}", currentUser.getCurrentAppUser().getId());
+        log.info("Executing getJournalEntries with args: startDate={}, endDate={}, page={}, size={}", startDate,
+                endDate, page, size);
         Specification<JournalEntry> spec = JournalSpecifications.hasUser(currentUser.getCurrentAppUser().getId())
                 .and(JournalSpecifications.hasDateRange(startDate, endDate));
 

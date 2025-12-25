@@ -25,7 +25,7 @@ public class CheckinService {
     }
 
     public void saveCheckinIfNotCheckedInToday(DailyCheckinDTO checkInDto) {
-        log.info("Saving checkin for user {}", currentUser.getCurrentAppUser().getId());
+        log.info("Executing saveCheckinIfNotCheckedInToday with args: {}", checkInDto);
         if (!isUserCheckedInToday(checkInDto.getCheckInDate())) {
             log.info("User {} is not checked in today", currentUser.getCurrentAppUser().getId());
             saveCheckin(checkInDto);
@@ -33,7 +33,7 @@ public class CheckinService {
     }
 
     public boolean isUserCheckedInToday(LocalDate date) {
-        log.info("Checking if user {} is checked in today", currentUser.getCurrentAppUser().getId());
+        log.info("Executing isUserCheckedInToday with args: {}", date);
         return checkinRespository.isCheckedInToday(currentUser.getCurrentAppUser().getId(), date) > 0;
     }
 
@@ -45,7 +45,7 @@ public class CheckinService {
                 .emotionsCsv(checkInDto.getEmotionsCsv())
                 .loss(lossService.getLossByUserIdAndId(currentUser.getCurrentUserAuthId(), checkInDto.getLossId()))
                 .build();
-        log.info("Saving checkin for user {}", dailyCheckin);
+        log.info("Executing saveCheckin with args: {}", checkInDto);
         checkinRespository.save(dailyCheckin);
     }
 }

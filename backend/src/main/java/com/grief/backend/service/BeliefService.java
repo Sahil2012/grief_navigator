@@ -15,6 +15,9 @@ import com.grief.backend.model.questions.BeliefStatement;
 import com.grief.backend.repository.BeliefEntryRepository;
 import com.grief.backend.repository.BeliefStatementRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class BeliefService {
 
@@ -33,6 +36,7 @@ public class BeliefService {
 
     @Cacheable("beliefStatements")
     public List<Object> getAllStatement() {
+        log.info("Executing getAllStatement");
         return beliefStatementRepository.findAll()
                 .stream()
                 .map(statement -> {
@@ -45,6 +49,7 @@ public class BeliefService {
     }
 
     public void saveBeliefStatements(List<String> beliefStatements) {
+        log.info("Executing saveBeliefStatements with args: {}", beliefStatements);
         List<BeliefStatement> entities = beliefStatements.stream()
                 .map(statement -> new BeliefStatement(statement, null))
                 .collect(Collectors.toList());
@@ -52,11 +57,8 @@ public class BeliefService {
         beliefStatementRepository.saveAll(entities);
     }
 
-    private BeliefStatement findBeliefStatement(Long id) {
-        return beliefStatementRepository.findById(id).get();
-    }
-
     public void saveEntries(List<BeliefEntryDTO> beliefEntries) {
+        log.info("Executing saveEntries with args: {}", beliefEntries);
         AppUser appUser = currentUser.getCurrentAppUser();
 
         List<BeliefEntry> entites = beliefEntries
@@ -71,5 +73,10 @@ public class BeliefService {
 
         beliefEntryRepository.saveAll(entites);
 
+    }
+
+    private BeliefStatement findBeliefStatement(Long id) {
+        log.info("Executing findBeliefStatement with args: {}", id);
+        return beliefStatementRepository.findById(id).get();
     }
 }

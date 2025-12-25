@@ -25,16 +25,18 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
 
     @Override
     public ResponseEntity<List<Object>> getBeliefStatements() {
+        log.info("Request received for getBeliefStatements");
         return ResponseEntity.ok().body(beliefService.getAllStatement());
     }
 
     @Override
     public ResponseEntity<Void> saveBeliefStatements(@Valid List<String> requestBody) {
-        try{
+        log.info("Request received for saveBeliefStatements with payload: {}", requestBody);
+        try {
             beliefService.saveBeliefStatements(requestBody);
             return ResponseEntity.ok().build();
-        } catch(Exception e) {
-            log.error("Error saving belief statement",e);
+        } catch (Exception e) {
+            log.error("Error saving belief statement", e);
         }
 
         return ResponseEntity.badRequest().build();
@@ -42,14 +44,15 @@ public class BeliefController implements BeliefStatementApi, BeliefEntryApi {
 
     @Override
     public ResponseEntity<Void> saveBeliefEntries(@Valid List<@Valid BeliefEntryDTO> beliefEntry) {
-        try{
+        log.info("Request received for saveBeliefEntries with payload: {}", beliefEntry);
+        try {
             beliefService.saveEntries(beliefEntry);
-            return ResponseEntity.ok().build(); 
-        } catch(Exception e) {
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             log.error("Error while saving the entries", e);
         }
 
         return ResponseEntity.badRequest().build();
     }
-    
+
 }

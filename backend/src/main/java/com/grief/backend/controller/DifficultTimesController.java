@@ -24,13 +24,14 @@ public class DifficultTimesController implements DifficultTimesApi {
 
     @Override
     public ResponseEntity<Void> registerDifficultTimes(@Valid List<@Valid DifficultTimes> difficultTimes) {
+        log.info("Request received for registerDifficultTimes with payload: {}", difficultTimes);
         try {
             difficultTimeService.registerDifficultTimes(difficultTimes);
             return ResponseEntity.ok().build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error("Faied to save Difficulties", e);
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
 }

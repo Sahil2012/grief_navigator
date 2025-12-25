@@ -15,17 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class AvoidenceEntryService {
-    
+
     private AvoidenceEntryRepository avoidenceEntryRepository;
     private CurrentUser currentUser;
     private LossService lossService;
     private AvoidenceStatementService avoidenceStatementService;
 
     public AvoidenceEntryService(AvoidenceEntryRepository avoidenceEntryRepository,
-        CurrentUser currentUser,
-        LossService lossService,
-        AvoidenceStatementService avoidenceStatementService
-    ) {
+            CurrentUser currentUser,
+            LossService lossService,
+            AvoidenceStatementService avoidenceStatementService) {
         this.currentUser = currentUser;
         this.lossService = lossService;
         this.avoidenceStatementService = avoidenceStatementService;
@@ -33,16 +32,17 @@ public class AvoidenceEntryService {
     }
 
     public void saveEntries(List<AvoidenceEntryDTO> avoidenceEntryDTOs) {
+        log.info("Executing saveEntries with args: {}", avoidenceEntryDTOs);
         AppUser appUser = currentUser.getCurrentAppUser();
 
         List<AvoidanceEntry> entries = avoidenceEntryDTOs.stream()
-                                            .map(dto -> AvoidanceEntry.builder()
-                                                            .appUser(appUser)
-                                                            .statement(avoidenceStatementService.getAllAvoidences(dto.getAvoidenceStatementId()))
-                                                            .frequencyRating(dto.getRating())
-                                                            .relatedLoss(lossService.getLoss(dto.getRelatedLoss()))
-                                                            .build())
-                                            .collect(Collectors.toList());
+                .map(dto -> AvoidanceEntry.builder()
+                        .appUser(appUser)
+                        .statement(avoidenceStatementService.getAllAvoidences(dto.getAvoidenceStatementId()))
+                        .frequencyRating(dto.getRating())
+                        .relatedLoss(lossService.getLoss(dto.getRelatedLoss()))
+                        .build())
+                .collect(Collectors.toList());
 
         avoidenceEntryRepository.saveAll(entries);
     }

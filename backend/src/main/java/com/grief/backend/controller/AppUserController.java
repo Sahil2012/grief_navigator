@@ -9,8 +9,9 @@ import com.grief.backend.generated.model.dto.CompletionStatus;
 import com.grief.backend.service.UserService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RestController
 public class AppUserController implements AuthApi, ProfileApi {
 
@@ -22,11 +23,13 @@ public class AppUserController implements AuthApi, ProfileApi {
 
     @Override
     public ResponseEntity<Void> getMyAppUser() {
+        log.info("Request received for getMyAppUser");
         return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<Void> completeCYGE(@Valid String body) {
+        log.info("Request received for completeCYGE with payload: {}", body);
         try {
             userService.updateStatus(body);
             return ResponseEntity.ok().build();
@@ -37,6 +40,7 @@ public class AppUserController implements AuthApi, ProfileApi {
 
     @Override
     public ResponseEntity<CompletionStatus> getCYGECompletionStatus() {
+        log.info("Request received for getCYGECompletionStatus");
         try {
             CompletionStatus status = userService.getCYGECompletionStatus();
             return ResponseEntity.ok(status);

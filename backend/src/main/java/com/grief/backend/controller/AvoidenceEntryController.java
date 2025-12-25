@@ -14,8 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class AvoidenceEntryController implements AvoidenceEntryApi{
-    
+public class AvoidenceEntryController implements AvoidenceEntryApi {
+
     private AvoidenceEntryService avoidenceEntryService;
 
     public AvoidenceEntryController(AvoidenceEntryService avoidenceEntryService) {
@@ -24,14 +24,14 @@ public class AvoidenceEntryController implements AvoidenceEntryApi{
 
     @Override
     public ResponseEntity<Void> saveAvoidenceEntries(@Valid List<@Valid AvoidenceEntryDTO> avoidenceEntryDTO) {
-        try{
+        log.info("Request received for saveAvoidenceEntries with payload: {}", avoidenceEntryDTO);
+        try {
             avoidenceEntryService.saveEntries(avoidenceEntryDTO);
             return ResponseEntity.ok().build();
-        } catch(Exception e) {
-            log.error("Error saving entries {}",e.getMessage());
+        } catch (Exception e) {
+            log.error("Error saving entries {}", e.getMessage());
         }
         return ResponseEntity.badRequest().build();
     }
-
 
 }

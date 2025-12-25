@@ -10,6 +10,9 @@ import com.grief.backend.model.AppUser;
 import com.grief.backend.model.questions.Loss;
 import com.grief.backend.repository.LossRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class LossService {
 
@@ -22,6 +25,7 @@ public class LossService {
     }
 
     public List<LossDTO> getAllLosses() {
+        log.info("Executing getAllLosses");
 
         List<Loss> losses = lossRepository.findAllLosses(currentUser.getCurrentUserAuthId());
 
@@ -39,6 +43,7 @@ public class LossService {
     }
 
     public void saveLoss(List<LossDTO> losses) throws Exception {
+        log.info("Executing saveLoss with args: {}", losses);
 
         AppUser appUser = currentUser.getCurrentAppUser();
 
@@ -58,10 +63,12 @@ public class LossService {
     }
 
     public Loss getLoss(Long lossId) {
+        log.info("Executing getLoss with args: {}", lossId);
         return lossRepository.findById(lossId).get();
     }
 
     public Loss getLossByUserIdAndId(String appUserId, Long lossId) {
+        log.info("Executing getLossByUserIdAndId with args: appUserId={}, lossId={}", appUserId, lossId);
         return lossRepository.findByUserIdAndId(appUserId, lossId);
     }
 }

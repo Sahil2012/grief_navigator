@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import com.grief.backend.dto.AuthUser;
 import com.grief.backend.model.AppUser;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CurrentUser {
 
@@ -16,6 +19,7 @@ public class CurrentUser {
     }
 
     public AuthUser getCurrentUser() {
+        log.info("Executing getCurrentUser");
         return (AuthUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -23,10 +27,12 @@ public class CurrentUser {
     }
 
     public String getCurrentUserAuthId() {
+        log.info("Executing getCurrentUserAuthId");
         return getCurrentUser().getSubject();
     }
 
     public AppUser getCurrentAppUser() {
+        log.info("Executing getCurrentAppUser");
         return userService.getAppUser(getCurrentUserAuthId());
     }
 }

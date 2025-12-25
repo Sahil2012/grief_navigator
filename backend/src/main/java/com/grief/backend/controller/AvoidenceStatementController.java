@@ -23,20 +23,21 @@ public class AvoidenceStatementController implements AvoidenceStatementApi {
 
     @Override
     public ResponseEntity<List<Object>> getAvoidenceStatements() {
+        log.info("Request received for getAvoidenceStatements");
         return ResponseEntity.ok().body(
-            avoidenceStatementService.fetchAvoidenceStatements()
-        );    
+                avoidenceStatementService.fetchAvoidenceStatements());
     }
 
     @Override
     public ResponseEntity<Void> saveAvoidenceStatements(@Valid List<String> requestBody) {
-        try{
+        log.info("Request received for saveAvoidenceStatements with payload: {}", requestBody);
+        try {
             avoidenceStatementService.saveAvoidenceStatements(requestBody);
             return ResponseEntity.ok().build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error("Error saving the statments {}", e.getMessage());
         }
         return ResponseEntity.badRequest().build();
     }
-    
+
 }

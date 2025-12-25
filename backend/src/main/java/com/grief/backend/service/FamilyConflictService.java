@@ -36,6 +36,7 @@ public class FamilyConflictService {
 
     @Cacheable(value = "familyConflictQuestions", key = "#sectionId")
     public List<FamilyConflictQuestionDTO> fetchQuestions(String sectionId, String fieldId) {
+        log.info("Executing fetchQuestions with args: sectionId={}, fieldId={}", sectionId, fieldId);
         if (fieldId == null || fieldId.isBlank()) {
             return fetchQuestionsForSection(sectionId);
         }
@@ -46,6 +47,7 @@ public class FamilyConflictService {
     }
 
     public void saveQuestions(List<FamilyConflictQuestionDTO> questionDtos) {
+        log.info("Executing saveQuestions with args: {}", questionDtos);
         List<FamilyConflictQuestions> entities = questionDtos.stream()
                 .map(this::convertToEntity)
                 .collect(Collectors.toList());
@@ -54,6 +56,7 @@ public class FamilyConflictService {
     }
 
     public void saveAnswers(List<FamilyConflictAnswerDTO> answerDTOs) {
+        log.info("Executing saveAnswers with args: {}", answerDTOs);
         // Implementation to save answers
 
         List<FamilyConflictAnswer> answerEntities = answerDTOs.stream()

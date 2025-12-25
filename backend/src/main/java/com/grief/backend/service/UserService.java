@@ -22,7 +22,7 @@ public class UserService {
 
     public AppUser loadOrCreateUser(AuthUser authUser) {
 
-        log.info("Loading or creating user with auth ID: {}", authUser.getSubject());
+        log.info("Executing loadOrCreateUser with args: {}", authUser);
 
         return appUserRepository.findByAuthProviderId(authUser.getSubject())
                 .orElseGet(() -> {
@@ -36,11 +36,12 @@ public class UserService {
     }
 
     public AppUser getAppUser(String authId) {
+        log.info("Executing getAppUser with args: {}", authId);
         return appUserRepository.findByAuthProviderId(authId).get();
     }
 
     public void updateStatus(String status) {
-        log.info("Updating CYGE completion status to {} for current user", status);
+        log.info("Executing updateStatus with args: {}", status);
         AppUser appUser = getCurrentAppUser();
 
         CompletionStatus completionStatus;
@@ -55,7 +56,7 @@ public class UserService {
     }
 
     public CompletionStatus getCYGECompletionStatus() {
-        log.info("Fetching CYGE completion status for current user");
+        log.info("Executing getCYGECompletionStatus");
         AppUser appUser = getCurrentAppUser();
         return appUser.getCompletionState();
     }
