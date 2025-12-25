@@ -27,12 +27,14 @@ public class LossService {
 
         return losses
                 .stream()
-                .map(loss -> {
-                    LossDTO dto = new LossDTO(loss.getType(), loss.getDescription(), loss.getDifficulty(),
-                            loss.getTime());
-                    dto.setId(loss.getId());
-                    return dto;
-                }).toList();
+                .map(loss -> LossDTO.builder()
+                        .id(loss.getId())
+                        .type(loss.getType())
+                        .description(loss.getDescription())
+                        .difficulty(loss.getDifficulty())
+                        .time(loss.getTime())
+                        .build())
+                .toList();
 
     }
 

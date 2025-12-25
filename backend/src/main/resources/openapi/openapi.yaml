@@ -373,9 +373,152 @@ paths:
                 type: boolean
         "400":
           description: "Bad Request"
+
+  /journalEntry:
+    post:
+      operationId: saveJournalEntry
+      tags:
+        - Journal Entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/JournalEntryDTO'
+      responses:
+        "200":
+          description: "Journal Entry saved successfully"
+          content:
+            application/json:
+              schema:
+                type: long
+        "400":
+          description: "Bad Request"
+
+    get:
+      operationId: getJournalEntries
+      tags:
+        - Journal Entry
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate 
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Journal Entries fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JournalEntryDTO'
+        "400":
+          description: "Bad Request"
+  
+  /journalEntry/{id}:
+    get:
+      operationId: getJournalEntry
+      tags:
+        - Journal Entry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: long
+      responses:
+        "200":
+          description: "Journal Entry fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/JournalEntryDTO'
+        "400":
+          description: "Bad Request"
+
+    patch:
+      operationId: updateJournalEntry
+      tags:
+        - Journal Entry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: long
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/JournalEntryDTO'
+      responses:
+        "200":
+          description: "Journal Entry updated successfully"
+        "400":
+          description: "Bad Request"
+
+    delete:
+      operationId: deleteJournalEntry
+      tags:
+        - Journal Entry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: long
+      responses:
+        "200":
+          description: "Journal Entry deleted successfully"
+        "400":
+          description: "Bad Request"
+  
   
 components:
   schemas:
+    JournalEntryDTO:
+      type: object
+      properties:
+        id:
+          type: long
+        entryDate:
+          type: string
+          format: date-time
+        title:
+          type: string
+        content:
+          type: string
+        relatedLossId:
+          type: long
+        cognitiveDistortionsJson:
+          type: string
+        emotionalTone:
+          type: string
+      required:
+        - entryDate
+        - title
+        - content
     DailyCheckinDTO:
       type: object
       properties:

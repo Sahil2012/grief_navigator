@@ -1,6 +1,6 @@
 package com.grief.backend.model.activities;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 import com.grief.backend.model.AppUser;
 import com.grief.backend.model.BaseEntity;
@@ -12,12 +12,18 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "journal_entries")
 public class JournalEntry extends BaseEntity {
 
