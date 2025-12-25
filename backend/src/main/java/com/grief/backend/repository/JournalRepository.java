@@ -1,6 +1,7 @@
 package com.grief.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.grief.backend.model.activities.JournalEntry;
 
 @Repository
-public interface JournalRepository extends JpaRepository<JournalEntry, Long> {
+public interface JournalRepository extends JpaRepository<JournalEntry, Long>, JpaSpecificationExecutor<JournalEntry> {
 
     @Query("SELECT count(e) FROM JournalEntry e WHERE e.title = :title AND e.appUser.id = :userId")
     public Long existsByTitle(String title, Long userId);

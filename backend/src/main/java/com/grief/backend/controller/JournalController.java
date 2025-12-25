@@ -43,15 +43,13 @@ public class JournalController implements JournalEntryApi {
 
     @Override
     public ResponseEntity<Void> updateJournalEntry(Long id, @Valid JournalEntryDTO journalEntryDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateJournalEntry'");
+        return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<List<JournalEntryDTO>> getJournalEntries(@Valid LocalDate startDate, @Valid LocalDate endDate,
             @Valid Integer page, @Valid Integer size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getJournalEntries'");
+        return ResponseEntity.ok(journalService.getJournalEntries(startDate, endDate, page, size));
     }
 
 }
