@@ -2,8 +2,6 @@ package com.grief.backend.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.grief.backend.generated.model.dto.JournalEntryDTO;
+import com.grief.backend.mapper.JournalMapper;
 import com.grief.backend.model.activities.JournalEntry;
 import com.grief.backend.repository.JournalRepository;
 import com.grief.backend.repository.JournalSpecifications;
@@ -28,23 +27,19 @@ public class JournalService {
 
     private final JournalRepository journalRepository;
     private final CurrentUser currentUser;
+    private final JournalMapper journalMapper;
 
-    public JournalService(JournalRepository journalRepository, CurrentUser currentUser) {
+    public JournalService(JournalRepository journalRepository, CurrentUser currentUser, JournalMapper journalMapper) {
         this.journalRepository = journalRepository;
         this.currentUser = currentUser;
+        this.journalMapper = journalMapper;
     }
 
     public JournalEntryDTO findByIdForUser(Long id) {
         log.info("Fetching journal entry for user {}", currentUser.getCurrentAppUser().getId());
         JournalEntry journalEntry = journalRepository.findByIdForUser(id, currentUser.getCurrentAppUser().getId());
         log.info("Converting journal entry to dto");
-        return JournalEntryDTO.builder()
-                .id(journalEntry.getId())
-                .entryDate(OffsetDateTime.of(journalEntry.getEntryDate(), ZoneOffset.UTC))
-                .title(journalEntry.getTitle())
-                .content(journalEntry.getContent())
-                .emotionalTone(journalEntry.getEmotionalTone())
-                .build();
+        return journalMapper.toDTO(journalEntry);
     }
 
     public Long saveJournalEntry(JournalEntryDTO journalEntryDTO) {
@@ -70,6 +65,22 @@ public class JournalService {
         return true;
     }
 
+    public void updateJournalEntry(Long id, JournalEntryDTO journalEntryDTO) {
+        log.info("Updating journal entry {} for user {}", id, currentUser.getCurrentAppUser().getId());
+        JournalEntry journalEntry = journalRepository.findByIdForUser(id, currentUser.getCurrentAppUser().getId());
+        if (journalEntry == null) {
+            throw new IllegalArgumentException("Journal entry not found or access denied");
+        }
+
+        if (journalEntryDTO.getEntryDate() != null) {
+            journalEntry.setEntryDate(LocalDateTime.from(journalEntryDTO.getEntryDate()));
+        }
+
+        journalMapper.updateJournalEntryFromDTO(journalEntryDTO, journalEntry);
+
+        journalRepository.save(journalEntry);
+    }
+
     public List<JournalEntryDTO> getJournalEntries(LocalDate startDate, LocalDate endDate, Integer page, Integer size) {
         log.info("Fetching journal entries for user {}", currentUser.getCurrentAppUser().getId());
         Specification<JournalEntry> spec = JournalSpecifications.hasUser(currentUser.getCurrentAppUser().getId())
@@ -80,18 +91,8 @@ public class JournalService {
         Page<JournalEntry> entries = journalRepository.findAll(spec, pageable);
 
         return entries.getContent().stream()
-                .map(this::convertToDTO)
+                .map(journalMapper::toDTO)
                 .collect(Collectors.toList());
-    }
-
-    private JournalEntryDTO convertToDTO(JournalEntry journalEntry) {
-        return JournalEntryDTO.builder()
-                .id(journalEntry.getId())
-                .entryDate(OffsetDateTime.of(journalEntry.getEntryDate(), ZoneOffset.UTC))
-                .title(journalEntry.getTitle())
-                .content(journalEntry.getContent())
-                .emotionalTone(journalEntry.getEmotionalTone())
-                .build();
     }
 
     private boolean existsByTitle(String title) {

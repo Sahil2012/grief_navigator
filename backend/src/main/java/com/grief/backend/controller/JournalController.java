@@ -43,6 +43,7 @@ public class JournalController implements JournalEntryApi {
 
     @Override
     public ResponseEntity<Void> updateJournalEntry(Long id, @Valid JournalEntryDTO journalEntryDTO) {
+        journalService.updateJournalEntry(id, journalEntryDTO);
         return ResponseEntity.ok().build();
     }
 
