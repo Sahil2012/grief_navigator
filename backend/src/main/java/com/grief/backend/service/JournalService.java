@@ -28,11 +28,14 @@ public class JournalService {
     private final JournalRepository journalRepository;
     private final CurrentUser currentUser;
     private final JournalMapper journalMapper;
+    private final LossService lossService;
 
-    public JournalService(JournalRepository journalRepository, CurrentUser currentUser, JournalMapper journalMapper) {
+    public JournalService(JournalRepository journalRepository, CurrentUser currentUser, JournalMapper journalMapper,
+            LossService lossService) {
         this.journalRepository = journalRepository;
         this.currentUser = currentUser;
         this.journalMapper = journalMapper;
+        this.lossService = lossService;
     }
 
     public JournalEntryDTO findByIdForUser(Long id) {
@@ -52,6 +55,7 @@ public class JournalService {
                 .appUser(currentUser.getCurrentAppUser())
                 .entryDate(LocalDateTime.from(journalEntryDTO.getEntryDate()))
                 .title(journalEntryDTO.getTitle())
+                .relatedLoss(lossService.getLoss(journalEntryDTO.getRelatedLossId()))
                 .content(journalEntryDTO.getContent())
                 .emotionalTone(journalEntryDTO.getEmotionalTone())
                 .build());
