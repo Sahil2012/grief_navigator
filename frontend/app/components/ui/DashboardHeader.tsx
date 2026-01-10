@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import React from "react";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { THEME } from "../../constants/theme";
-import { useAuthStore } from "../../store/authStore";
+import { useProfile } from "../../hooks/useProfile";
 import { authService } from "../../services/api/authService";
+import { useAuthStore } from "../../store/authStore";
 
 export const DashboardHeader: React.FC = () => {
     const user = useAuthStore(state => state.user);
+    const { profile } = useProfile();
     const clearToken = useAuthStore(state => state.clearToken);
 
     const getGreeting = () => {
@@ -58,12 +60,12 @@ export const DashboardHeader: React.FC = () => {
         >
             <View className="flex-row items-center">
                 <Image
-                    source={{ uri: user?.profileImage || 'https://i.pravatar.cc/150?img=32' }}
+                    source={{ uri: profile?.profilePictureUrl || user?.profileImage || 'https://i.pravatar.cc/150?img=32' }}
                     className="w-12 h-12 rounded-full mr-3 border-2 border-white"
                 />
                 <View>
                     <Text className="text-gray-400 text-xs font-medium uppercase tracking-wide">{getGreeting()}</Text>
-                    <Text className="text-textDark font-bold text-xl">Sarah</Text>
+                    <Text className="text-textDark font-bold text-xl">{profile?.firstName || "Sarah"}</Text>
                 </View>
             </View>
             <TouchableOpacity

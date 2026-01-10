@@ -1,4 +1,5 @@
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -65,7 +66,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ activeTab, setActiveTab, colors }
     </TouchableOpacity>
 
     {/* Account Tab */}
-    <TouchableOpacity className="items-center" onPress={() => setActiveTab("account")}>
+    <TouchableOpacity className="items-center" onPress={() => router.push('/profile')}>
       <FontAwesome6 name="user-circle" size={21} color={activeTab === "account" ? colors.primary : "#9CA3AF"} />
       <Text
         className={`text-xs ${activeTab === "account" ? "font-bold" : "font-medium"}`}
