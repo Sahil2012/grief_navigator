@@ -27,7 +27,8 @@ public interface JournalMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateJournalEntryFromDTO(JournalEntryDTO dto, @MappingTarget JournalEntry entity);
 
-    @Mapping(target = "entryDate", expression = "java(mapOffsetDateTime(entity.getEntryDate()))")
+    @Mapping(target = "relatedLossId", source = "relatedLoss.id")
+    @Mapping(target = "entryDate", source = "entryDate")
     JournalEntryDTO toDTO(JournalEntry entity);
 
     default OffsetDateTime mapOffsetDateTime(LocalDateTime localDateTime) {

@@ -26,6 +26,17 @@ public class AppUser extends BaseEntity {
 
     private String timezone;
 
+    private String firstName;
+
+    private String lastName;
+
+    @Column(length = 2000)
+    private String bio;
+
+    private String phoneNumber;
+
+    private String profilePictureUrl;
+
     @Enumerated(EnumType.STRING)
     private CompletionStatus completionState = CompletionStatus.LOSS_PENDING;
 

@@ -76,6 +76,45 @@ paths:
           description: Difficulties acknowleged
         "400":
           description: Bad request
+
+  /profile:
+    get:
+      operationId: getMyProfile
+      summary: Get current user profile
+      tags:
+        - Profile
+      responses:
+        "200":
+          description: Profile fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileDTO"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+    patch:
+      operationId: updateProfile
+      summary: Update current user profile
+      tags:
+        - Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileDTO"
+      responses:
+        "200":
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileDTO"
+        "400":
+          description: Bad request
+
   
   /beliefStatement:
     get:
@@ -650,3 +689,22 @@ components:
         - TWO
         - THREE
         - FOUR
+    ProfileDTO:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        bio:
+          type: string
+        phoneNumber:
+          type: string
+        profilePictureUrl:
+          type: string
+        email:
+          type: string
+        completionStatus:
+          $ref: "#/components/schemas/CompletionStatus"
+
+

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grief.backend.generated.api.AuthApi;
 import com.grief.backend.generated.api.ProfileApi;
 import com.grief.backend.generated.model.dto.CompletionStatus;
+import com.grief.backend.generated.model.dto.ProfileDTO;
 import com.grief.backend.service.UserService;
 
 import jakarta.validation.Valid;
@@ -45,6 +46,29 @@ public class AppUserController implements AuthApi, ProfileApi {
             CompletionStatus status = userService.getCYGECompletionStatus();
             return ResponseEntity.ok(status);
         } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ProfileDTO> getMyProfile() {
+        log.info("Request received for getMyProfile");
+        try {
+            ProfileDTO profile = userService.getProfile();
+            return ResponseEntity.ok(profile);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ProfileDTO> updateProfile(@Valid ProfileDTO body) {
+        log.info("Request received for updateProfile with payload: {}", body);
+        try {
+            ProfileDTO updatedProfile = userService.updateProfile(body);
+            return ResponseEntity.ok(updatedProfile);
+        } catch (Exception e) {
+            log.error("Error updating profile", e);
             return ResponseEntity.status(500).build();
         }
     }
