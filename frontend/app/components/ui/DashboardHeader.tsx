@@ -7,11 +7,13 @@ import { THEME } from "../../constants/theme";
 import { useProfile } from "../../hooks/useProfile";
 import { authService } from "../../services/api/authService";
 import { useAuthStore } from "../../store/authStore";
+import { useProfileStore } from "../../store/profileStore";
 
 export const DashboardHeader: React.FC = () => {
     const user = useAuthStore(state => state.user);
     const { profile } = useProfile();
     const clearToken = useAuthStore(state => state.clearToken);
+    const clearProfile = useProfileStore(state => state.clearProfile);
 
     const getGreeting = () => {
         const hour = new Date().getHours();
@@ -36,6 +38,7 @@ export const DashboardHeader: React.FC = () => {
                             console.log("Logout error:", error);
                         } finally {
                             clearToken();
+                            clearProfile();
                             router.replace('/login');
                         }
                     }
