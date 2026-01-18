@@ -9,6 +9,8 @@ import { THEME } from "../../constants/theme";
 import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import { SafeguardingDatePicker } from "../../components/ui/SafeguardingDatePicker";
+import { useSanctuaryStore } from "../../store/sanctuaryStore";
+import { sanctuaryPlanService, SanctuaryPlanDTO } from "../../services/api/sanctuaryPlanService";
 
 const FormInput = ({ label, placeholder, value, onChangeText }: any) => (
     <View className="mb-4">
@@ -32,6 +34,8 @@ interface Signature {
 export default function SafeguardingSignaturesScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    const { planData, reset } = useSanctuaryStore();
+    const [loading, setLoading] = useState(false);
 
     // Initial state with one signature block
     const [signatures, setSignatures] = useState<Signature[]>([
@@ -71,11 +75,37 @@ export default function SafeguardingSignaturesScreen() {
         }
     };
 
-    const handleComplete = () => {
-        // Here you would save the data
-        Alert.alert("Plan Saved", "Your Safeguarding Plan has been successfully saved.", [
-            { text: "OK", onPress: () => router.push("/activities") }
-        ]);
+    const handleComplete = async () => {
+        // Collect signatures
+        const finalSignatures = signatures
+            .filter(s => s.name && s.date)
+            .map(s => ({
+                signature: s.name,
+                date: dayjs(s.date).toISOString()
+            }));
+
+        const finalPlan: SanctuaryPlanDTO = {
+            name: planData.name,
+            startDate: planData.startDate,
+            endDate: planData.endDate,
+            sanctuaryQuestions: planData.sanctuaryQuestions || [],
+            sanctuaryActivities: [],
+            sanctuarySignatures: finalSignatures
+        };
+
+        try {
+            setLoading(true);
+            await sanctuaryPlanService.createSanctuaryPlan(finalPlan);
+            reset();
+            Alert.alert("Plan Saved", "Your Safeguarding Plan has been successfully saved.", [
+                { text: "OK", onPress: () => router.push("/activities") }
+            ]);
+        } catch (error) {
+            Alert.alert("Error", "Failed to save plan. Please try again.");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -154,12 +184,14 @@ export default function SafeguardingSignaturesScreen() {
                     <Text className="ml-2 text-teal-600 font-bold text-base">Add Another Signature</Text>
                 </TouchableOpacity>
 
-                {/* Final Save Button */}
                 <TouchableOpacity
                     onPress={handleComplete}
-                    className="bg-teal-500 rounded-2xl py-4 items-center shadow-md shadow-teal-200 mt-8"
+                    disabled={loading}
+                    className={`bg-teal-500 rounded-2xl py-4 items-center shadow-md shadow-teal-200 mt-8 ${loading ? 'opacity-50' : ''}`}
                 >
-                    <Text className="text-white font-bold text-lg">Complete Plan</Text>
+                    <Text className="text-white font-bold text-lg">
+                        {loading ? 'Saving...' : 'Complete Plan'}
+                    </Text>
                 </TouchableOpacity>
 
             </KeyboardAwareScrollView>

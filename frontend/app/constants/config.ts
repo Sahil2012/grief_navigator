@@ -41,4 +41,8 @@ export const ENDPOINTS = {
         UPDATE: `${API_BASE_URL}/journalEntry/{id}`,
         DELETE: `${API_BASE_URL}/journalEntry/{id}`,
     },
+    SANCTUARY_PLAN: {
+        CREATE: `${API_BASE_URL}/sanctuaryPlan`,
+        UPDATE: `${API_BASE_URL}/sanctuaryPlan/{id}`,
+    },
 };
