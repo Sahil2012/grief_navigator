@@ -533,9 +533,105 @@ paths:
         "400":
           description: "Bad Request"
   
+  /sanctuaryPlan:
+    post:
+      operationId: createSanctuaryPlan
+      tags:
+        - Sanctuary Plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SanctuaryPlanDTO'
+      responses:
+        "200":
+          description: "Sanctuary Plan created successfully"
+        "400":
+          description: "Bad Request"
+  /sanctuaryPlan/{id}:
+    patch:
+      operationId: updateSanctuaryPlan
+      tags:
+        - Sanctuary Plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: long
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SanctuaryPlanDTO'
+      responses:
+        "200":
+          description: "Sanctuary Plan updated successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/SanctuaryPlanDTO'
+        "400":
+          description: "Bad Request"
   
 components:
   schemas:
+    SanctuaryPlanDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        sanctuaryQuestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanctuaryQuestionDTO'
+        sanctuaryActivities:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanctuaryActivityDTO'
+        sanctuarySignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanctuarySignatureDTO'
+    SanctuaryQuestionDTO:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+        category:
+          type: string
+          enum:
+            - CARE
+            - WARNING
+            - PLAN
+            - SUPPORT
+    SanctuaryActivityDTO:
+      type: object
+      properties:
+        activityQuestion:
+          type: string
+        activityAnswer:
+          type: string
+    SanctuarySignatureDTO:
+      type: object
+      properties:
+        signature:
+          type: string
+        date:
+          type: date
     JournalEntryDTO:
       type: object
       properties:
