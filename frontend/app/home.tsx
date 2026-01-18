@@ -260,7 +260,7 @@ const HomeScreen: React.FC = () => {
 
             {/* Action 3 */}
             <TouchableOpacity
-              onPress={() => router.push('/coming-soon')}
+              onPress={() => router.push('/activities')}
               className="bg-white rounded-2xl p-4 w-[31%] items-center shadow-sm border border-white h-28 justify-center"
             >
               <View className="w-10 h-10 bg-orange-50 rounded-xl items-center justify-center mb-2">
