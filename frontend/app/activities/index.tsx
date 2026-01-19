@@ -135,6 +135,8 @@ export default function ActivityListScreen() {
                             onPress={() => {
                                 if (section.id === "safeguarding") {
                                     router.push("/activities/safegaurding/safeguarding");
+                                } else if (section.id === "finding_mix") {
+                                    router.push("/activities/finding-right-mix");
                                 } else {
                                     router.push("/coming-soon");
                                 }

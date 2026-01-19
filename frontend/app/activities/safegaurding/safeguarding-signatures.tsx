@@ -98,7 +98,7 @@ export default function SafeguardingSignaturesScreen() {
             await sanctuaryPlanService.createSanctuaryPlan(finalPlan);
             reset();
             Alert.alert("Plan Saved", "Your Safeguarding Plan has been successfully saved.", [
-                { text: "OK", onPress: () => router.push("/activities") }
+                { text: "OK", onPress: () => router.dismissTo("/activities") }
             ]);
         } catch (error) {
             Alert.alert("Error", "Failed to save plan. Please try again.");

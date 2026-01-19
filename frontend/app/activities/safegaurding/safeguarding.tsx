@@ -169,11 +169,7 @@ export default function SafeguardingScreen() {
                                             onChangeText={(text) => handleTextChange(activity.id, text)}
                                         />
 
-                                        <View className="flex-row justify-end mt-4">
-                                            <TouchableOpacity className="bg-teal-500 py-2.5 px-6 rounded-xl shadow-sm">
-                                                <Text className="text-white font-bold text-sm">Save Note</Text>
-                                            </TouchableOpacity>
-                                        </View>
+
                                     </View>
                                 )}
                             </View>
