@@ -596,8 +596,31 @@ paths:
           description: "Support Tool created successfully"
         "400":
           description: "Bad Request"
+
+  /griefDerailer:
+    post:
+      operationId: createGriefDerailer
+      tags:
+        - GriefDerailer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/GriefDerailerDTO'
+      responses:
+        "200":
+          description: "Grief Derailer created successfully"
+        "400":
+          description: "Bad Request"
 components:
   schemas:
+    GriefDerailerDTO:
+      type: object
+      properties:
+        derailer:
+          type: string
     SupportToolDTO:
       type: object
       properties:
