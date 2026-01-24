@@ -48,4 +48,7 @@ export const ENDPOINTS = {
     SUPPORT_TOOL: {
         CREATE: `${API_BASE_URL}/supportTool`,
     },
+    GRIEF_DERAILER: {
+        CREATE: `${API_BASE_URL}/griefDerailer`,
+    },
 };
