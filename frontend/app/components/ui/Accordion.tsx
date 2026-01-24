@@ -10,45 +10,61 @@ interface AccordionProps {
     children: React.ReactNode;
     defaultOpen?: boolean;
     subtitle?: string;
+    isCompleted?: boolean;
+    isOpen?: boolean;
+    onToggle?: () => void;
 }
 
-export const Accordion = ({ title, icon, children, defaultOpen = false, subtitle }: AccordionProps) => {
-    const [isOpen, setIsOpen] = useState(defaultOpen);
+export const Accordion = ({ title, icon, children, defaultOpen = false, subtitle, isCompleted = false, isOpen: controlledIsOpen, onToggle }: AccordionProps) => {
+    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
 
-    const toggleOpen = () => {
+    const isExpanded = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+
+    const handleToggle = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setIsOpen(!isOpen);
+        if (onToggle) {
+            onToggle();
+        } else {
+            setInternalIsOpen(!internalIsOpen);
+        }
     };
 
     return (
         <View className="bg-white rounded-2xl border border-gray-200 mb-4 overflow-hidden shadow-sm">
             <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={toggleOpen}
-                className={`flex-row items-center justify-between p-5 ${isOpen ? 'bg-gray-50 border-b border-gray-100' : ''}`}
+                onPress={handleToggle}
+                className={`flex-row items-center justify-between p-5 ${isExpanded ? 'bg-gray-50 border-b border-gray-100' : ''}`}
             >
                 <View className="flex-row items-center flex-1">
-                    {icon && (
-                        <View className="w-10 h-10 rounded-full bg-teal-50 items-center justify-center mr-4">
-                            <Ionicons name={icon} size={22} color={THEME.COLORS.primary} />
-                        </View>
-                    )}
+                    <View className={`w-10 h-10 rounded-full items-center justify-center mr-3 ${isCompleted ? 'bg-green-100' : 'bg-primary/10'}`}>
+                        <Ionicons
+                            name={isCompleted ? "checkmark" : (icon || "star")}
+                            size={20}
+                            color={isCompleted ? THEME.COLORS.greenSoft : THEME.COLORS.primary}
+                        />
+                    </View>
                     <View className="flex-1">
-                        <Text className="text-base font-bold text-textDark">{title}</Text>
-                        {subtitle && (
+                        <Text className={`font-bold text-base ${isCompleted ? 'text-green-700' : 'text-textDark'}`}>
+                            {title}
+                        </Text>
+                        {isCompleted && (
+                            <Text className="text-xs text-green-600 font-medium">Completed</Text>
+                        )}
+                        {subtitle && !isCompleted && ( // Render subtitle only if not completed
                             <Text className="text-sm text-textSecondary mt-1">{subtitle}</Text>
                         )}
                     </View>
                 </View>
 
                 <Ionicons
-                    name={isOpen ? "chevron-up" : "chevron-down"}
+                    name={isExpanded ? "chevron-up" : "chevron-down"}
                     size={20}
                     color={THEME.COLORS.textSecondary}
                 />
             </TouchableOpacity>
 
-            {isOpen && (
+            {isExpanded && (
                 <View className="p-5">
                     <Animated.View entering={FadeIn} exiting={FadeOut}>
                         {children}

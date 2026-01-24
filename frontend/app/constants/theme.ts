@@ -17,6 +17,7 @@ export const THEME = {
         textSecondary: "#7A7F87",
         dark: "#23272F",
         secondary: "#7A7F87",
+        gray200: "#F3F4F6",
 
         // Legacy aliases mapping to above or keeping for compatibility
         PRIMARY: '#2FC5C0', // Updated to match teal

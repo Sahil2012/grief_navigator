@@ -45,4 +45,7 @@ export const ENDPOINTS = {
         CREATE: `${API_BASE_URL}/sanctuaryPlan`,
         UPDATE: `${API_BASE_URL}/sanctuaryPlan/{id}`,
     },
+    SUPPORT_TOOL: {
+        CREATE: `${API_BASE_URL}/supportTool`,
+    },
 };

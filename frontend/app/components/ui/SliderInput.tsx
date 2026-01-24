@@ -13,6 +13,7 @@ interface SliderInputProps {
     min?: number;
     max?: number;
     step?: number;
+    disabled?: boolean;
 }
 
 export const SliderInput = ({
@@ -24,7 +25,8 @@ export const SliderInput = ({
     maxLabel = "Much better",
     min = -3,
     max = 3,
-    step = 1
+    step = 1,
+    disabled = false
 }: SliderInputProps) => {
     return (
         <View className="mb-4">
@@ -41,15 +43,16 @@ export const SliderInput = ({
             </View>
 
             <Slider
-                style={{ width: '100%', height: 40 }}
+                style={{ width: '100%', height: 40, opacity: disabled ? 0.5 : 1 }}
                 minimumValue={min}
                 maximumValue={max}
-                step={step}
+                step={1}
                 value={value}
                 onValueChange={onValueChange}
-                minimumTrackTintColor={value > 0 ? THEME.COLORS.primary : value < 0 ? "#EF4444" : "#9CA3AF"}
-                maximumTrackTintColor="#E5E7EB"
+                minimumTrackTintColor={THEME.COLORS.primary}
+                maximumTrackTintColor={THEME.COLORS.gray200}
                 thumbTintColor={THEME.COLORS.primary}
+                disabled={disabled}
             />
 
             <View className="flex-row justify-between mt-1">
