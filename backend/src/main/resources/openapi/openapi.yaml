@@ -579,8 +579,39 @@ paths:
         "400":
           description: "Bad Request"
   
+  /supportTool:
+    post:
+      operationId: createSupportTool
+      tags:
+        - Support Tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SupportToolDTO'
+      responses:
+        "200":
+          description: "Support Tool created successfully"
+        "400":
+          description: "Bad Request"
 components:
   schemas:
+    SupportToolDTO:
+      type: object
+      properties:
+        answer:
+          type: object
+          additionalProperties:
+            type: string
+        supportToolCategory:
+          type: string
+          enum:
+            - BREATHING_EXCERSISE
+            - MEDITATION
+            - IDENTIFICATION_TOOL
+            - STRESS_RELIEF
     SanctuaryPlanDTO:
       type: object
       properties:
