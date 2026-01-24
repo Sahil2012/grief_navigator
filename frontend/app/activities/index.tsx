@@ -137,6 +137,8 @@ export default function ActivityListScreen() {
                                     router.push("/activities/safegaurding/safeguarding");
                                 } else if (section.id === "finding_mix") {
                                     router.push("/activities/finding-right-mix");
+                                } else if (section.id === "tough_times") {
+                                    router.push("/activities/though-days");
                                 } else {
                                     router.push("/coming-soon");
                                 }
