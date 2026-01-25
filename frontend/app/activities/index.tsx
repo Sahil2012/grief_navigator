@@ -143,6 +143,8 @@ export default function ActivityListScreen() {
                                     router.push("/activities/grief-derailers");
                                 } else if (section.id === "grief_milestones") {
                                     router.push("/activities/grief-milestones");
+                                } else if (section.id === "core_activities") {
+                                    router.push("/activities/core-activities");
                                 } else {
                                     router.push("/coming-soon");
                                 }
