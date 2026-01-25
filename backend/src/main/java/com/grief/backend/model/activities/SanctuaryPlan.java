@@ -35,15 +35,12 @@ public class SanctuaryPlan extends BaseEntity {
 
     private LocalDate endDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sanctuary_plan_id")
+    @OneToMany(mappedBy = "sanctuaryPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SanctuaryQuestion> sanctuaryQuestions = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sanctuary_plan_id")
+    @OneToMany(mappedBy = "sanctuaryPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SanctuaryActivity> sanctuaryActivities = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sanctuary_plan_id")
+    @OneToMany(mappedBy = "sanctuaryPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SanctuarySignature> sanctuarySignatures = new ArrayList<>();
 }

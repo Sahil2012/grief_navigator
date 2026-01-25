@@ -4,6 +4,7 @@ import com.grief.backend.model.BaseEntity;
 import com.grief.backend.model.enums.ScanturyCategory;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class SanctuaryQuestion extends BaseEntity {
 
     private ScanturyCategory catgory;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sanctuary_plan_id", nullable = false)
     private SanctuaryPlan sanctuaryPlan;
 }

@@ -16,15 +16,32 @@ import com.grief.backend.model.enums.ScanturyCategory;
 
 public class ScantuaryPlanMapper {
     public static SanctuaryPlan mapToSancturyPlan(SanctuaryPlanDTO sanctuaryPlanDTO, AppUser appUser) {
-        return SanctuaryPlan.builder()
+        SanctuaryPlan sanctuaryPlan = SanctuaryPlan.builder()
                 .appUser(appUser)
                 .name(sanctuaryPlanDTO.getName())
                 .startDate(sanctuaryPlanDTO.getStartDate())
                 .endDate(sanctuaryPlanDTO.getEndDate())
-                .sanctuaryActivities(mapToSanctuaryActivities(sanctuaryPlanDTO.getSanctuaryActivities()))
-                .sanctuaryQuestions(mapToSanctuaryQuestions(sanctuaryPlanDTO.getSanctuaryQuestions()))
-                .sanctuarySignatures(mapToSanctuarySignatures(sanctuaryPlanDTO.getSanctuarySignatures()))
                 .build();
+
+        if (sanctuaryPlanDTO.getSanctuaryActivities() != null) {
+            List<SanctuaryActivity> activities = mapToSanctuaryActivities(sanctuaryPlanDTO.getSanctuaryActivities());
+            activities.forEach(activity -> activity.setSanctuaryPlan(sanctuaryPlan));
+            sanctuaryPlan.setSanctuaryActivities(activities);
+        }
+
+        if (sanctuaryPlanDTO.getSanctuaryQuestions() != null) {
+            List<SanctuaryQuestion> questions = mapToSanctuaryQuestions(sanctuaryPlanDTO.getSanctuaryQuestions());
+            questions.forEach(question -> question.setSanctuaryPlan(sanctuaryPlan));
+            sanctuaryPlan.setSanctuaryQuestions(questions);
+        }
+
+        if (sanctuaryPlanDTO.getSanctuarySignatures() != null) {
+            List<SanctuarySignature> signatures = mapToSanctuarySignatures(sanctuaryPlanDTO.getSanctuarySignatures());
+            signatures.forEach(signature -> signature.setSanctuaryPlan(sanctuaryPlan));
+            sanctuaryPlan.setSanctuarySignatures(signatures);
+        }
+
+        return sanctuaryPlan;
     }
 
     private static List<SanctuaryActivity> mapToSanctuaryActivities(List<SanctuaryActivityDTO> sanctuaryActivityDTOs) {

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.grief.backend.model.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class SanctuarySignature extends BaseEntity {
     private LocalDate date;
 
     // Many to One with SanctuaryPlan
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sanctuary_plan_id", nullable = false)
     private SanctuaryPlan sanctuaryPlan;
 }
