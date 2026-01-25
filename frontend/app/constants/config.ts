@@ -51,4 +51,7 @@ export const ENDPOINTS = {
     GRIEF_DERAILER: {
         CREATE: `${API_BASE_URL}/griefDerailer`,
     },
+    GRIEF_MILESTONE: {
+        CREATE: `${API_BASE_URL}/griefMilestone`,
+    },
 };

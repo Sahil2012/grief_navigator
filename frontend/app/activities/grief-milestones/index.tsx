@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert, LayoutAnimation, ScrollView, Animated, Platform, UIManager, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, LayoutAnimation, ScrollView, Animated, Platform, UIManager, Modal, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
+import { griefMilestoneService, GriefFocus } from '../../services/api/griefMilestoneService';
 import { ScreenContainer } from '../../components/ui/ScreenContainer';
 import { AppHeader } from '../../components/ui/AppHeader';
 import { Ionicons } from '@expo/vector-icons';
@@ -148,8 +149,7 @@ export default function GriefMilestonesScreen() {
 
     const selectedMilestone = MILESTONES.find(m => m.id === selectedMilestoneId) || MILESTONES[0];
 
-    // Reset form when milestone changes
-    useEffect(() => {
+    const resetForm = () => {
         setDuration(0);
         setAnswers({});
         setIndicators({
@@ -159,12 +159,17 @@ export default function GriefMilestonesScreen() {
             path: false,
             context: false,
         });
+    };
+
+    // Reset form when milestone changes
+    useEffect(() => {
+        resetForm();
     }, [selectedMilestoneId]);
 
-    const handleAnswerChange = (questionId: string, text: string) => {
+    const handleAnswerChange = (questionLabel: string, text: string) => {
         setAnswers(prev => ({
             ...prev,
-            [questionId]: text
+            [questionLabel]: text
         }));
     };
 
@@ -172,9 +177,51 @@ export default function GriefMilestonesScreen() {
         setIndicators(prev => ({ ...prev, [key]: !prev[key] }));
     };
 
-    const handleSave = () => {
-        console.log("Saving answers:", answers); // Debug
-        Alert.alert("Progress Saved", "Your milestone progress has been updated.");
+    const [isSaving, setIsSaving] = useState(false);
+
+    const getGriefFocus = (id: string): GriefFocus => {
+        switch (id) {
+            case 'UNDERSTAND_ACCEPT': return GriefFocus.UNDERSTAND_AND_ACCEPT_LOSS;
+            case 'MANAGE_EMOTIONS': return GriefFocus.MANAGE_EMITIONS;
+            case 'PROMISING_FUTURE': return GriefFocus.FUTURE;
+            case 'STRENGTHEN_RELATIONSHIPS': return GriefFocus.STRENGTHENING_RELATIONSHIPS;
+            case 'TELL_STORY': return GriefFocus.STORY_OF_LOSS;
+            case 'REMINDERS': return GriefFocus.GIREF_TRIGGERS;
+            default: return GriefFocus.UNDERSTAND_AND_ACCEPT_LOSS;
+        }
+    };
+
+    const handleSave = async () => {
+        if (isSaving) return;
+
+        // Basic validation
+        if (duration === 0 && Object.keys(answers).length === 0) {
+            Alert.alert("Empty Entry", "Please enter a duration or answer some questions before saving.");
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const activeIndicators = Object.entries(indicators)
+                .filter(([_, value]) => value)
+                .map(([key, _]) => key);
+
+            await griefMilestoneService.createGriefMilestone({
+                focus: getGriefFocus(selectedMilestoneId),
+                timeDuration: duration,
+                reflections: answers,
+                indicators: activeIndicators,
+            });
+
+
+            Alert.alert("Success", "Your milestone progress has been saved successfully.");
+            resetForm();
+        } catch (error) {
+            console.error("Failed to save milestone:", error);
+            Alert.alert("Error", "Failed to save your progress. Please try again.");
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     // Animation for dropdown
@@ -369,8 +416,8 @@ export default function GriefMilestonesScreen() {
                                         textAlignVertical={q.multiline ? "top" : "center"}
                                         placeholder={q.placeholder}
                                         placeholderTextColor="#9CA3AF"
-                                        value={answers[q.id] || ''}
-                                        onChangeText={(text) => handleAnswerChange(q.id, text)}
+                                        value={answers[q.label] || ''}
+                                        onChangeText={(text) => handleAnswerChange(q.label, text)}
                                     />
                                 </View>
                             ))}
@@ -427,13 +474,18 @@ export default function GriefMilestonesScreen() {
                                 className="bg-primary py-4 rounded-xl items-center shadow-lg shadow-teal-200"
                                 onPress={handleSave}
                                 activeOpacity={0.8}
+                                disabled={isSaving}
                             >
-                                <Text className="text-white font-bold text-lg">Save Progress</Text>
+                                {isSaving ? (
+                                    <ActivityIndicator size="small" color="white" />
+                                ) : (
+                                    <Text className="text-white font-bold text-lg">Save Progress</Text>
+                                )}
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
             </KeyboardAwareScrollView>
-        </ScreenContainer>
+        </ScreenContainer >
     );
 }
