@@ -614,8 +614,47 @@ paths:
           description: "Grief Derailer created successfully"
         "400":
           description: "Bad Request"
+  /griefMilestone:
+    post:
+      operationId: createGriefMilestone
+      tags:
+        - GriefMilestone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/GriefMilestoneDTO'
+      responses:
+        "200":
+          description: "Grief Milestone created successfully"
+        "400":
+          description: "Bad Request"
 components:
   schemas:
+    GriefMilestoneDTO:
+      type: object
+      properties:
+        focus:
+          type: string
+          enum:
+            - UNDERSTAND_AND_ACCEPT_LOSS
+            - MANAGE_EMITIONS
+            - FUTURE
+            - STRENGTHENING_RELATIONSHIPS
+            - STORY_OF_LOSS
+            - GIREF_TRIGGERS
+        timeDuration:
+          type: long
+        reflections:
+          type: object
+          additionalProperties:
+            type: string
+        indicators:
+          type: array
+          items:
+            type: string
     GriefDerailerDTO:
       type: object
       properties:
