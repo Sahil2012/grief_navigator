@@ -1,0 +1,10 @@
+# Copy to application-dev.properties and fill in — never commit the real file.
+# application.properties resolves these placeholders for the dev profile.
+
+# Supabase pooler JDBC URL (Settings → Database → Connection pooling)
+DB_CONNECTION_POOL_URL = jdbc:postgresql://<your-pooler-host>:6543/postgres?user=postgres.<project-ref>&password=<db-password>&prepareThreshold=0
+DB_USER = postgres
+DB_PASSWORD = <db-password>
+
+# Supabase project JWT secret (Settings → API → JWT Secret) — must match so tokens verify
+AUTH_JWT_SECRET = <jwt-secret>
